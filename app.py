@@ -6,12 +6,28 @@ import streamlit.components.v1 as components
 st.set_page_config(layout="wide", page_title="왱알왱알 운동장")
 
 # ========================================================
-# ✏️ [텍스트 수정 구역] 문구를 바꿀 땐 여기만 수정하세요!
+# ✏️ [설정 구역] 관리용 정보는 여기만 수정하세요!
 # ========================================================
 MAIN_TITLE_LINE1 = "안 알려줘서"
 MAIN_TITLE_LINE2 = "내가 알아봤다"
 
 TOGGLE_MENU_NAME = "📂 다른 주제 보기"
+
+# [1] 구글 애널리틱스 코드 (확인하신 진짜 트래커 ID 주입 완료!)
+GA_SCRIPT = """
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-527EP6QCNY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-527EP6QCNY');
+</script>
+"""
+
+# [2] 디스커스 댓글창 설정 (디스커스 가입 후 발급받은 숏네임을 여기에 적으세요!)
+# 예: 디스커스 주소가 https://waeng-al.disqus.com 이라면 "waeng-al" 입력
+DISQUS_SHORTNAME = "buzz-buzz-1"  
 # ========================================================
 
 # 2. 폴더 내 HTML 파일들을 자동으로 긁어와서 목록화하기
@@ -71,6 +87,35 @@ html_file_path = articles[selected_article_title]
 if html_file_path and os.path.exists(html_file_path):
     with open(html_file_path, "r", encoding="utf-8") as f:
         html_content = f.read()
-    components.html(html_content, height=1500, scrolling=True)
+    
+    # 본문 아티클 출력
+    components.html(html_content, height=1300, scrolling=True)
+    
+    # --- 💬 하단 디스커스 댓글창 구역 ---
+    st.markdown("---")
+    st.subheader("💬 댓글을 남겨주세요")
+    
+    disqus_html = f"""
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {{
+            this.page.url = window.parent.location.href;  // 스트림릿 실제 주소 자동 인식
+            this.page.identifier = "{selected_article_title}"; // 아티클 제목별로 댓글창 분리
+        }};
+        (function() {{ 
+            var d = document, s = d.createElement('script');
+            s.src = 'https://{DISQUS_SHORTNAME}.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }})();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    """
+    # 댓글창 렌더링
+    components.html(disqus_html, height=600, scrolling=True)
+
 else:
     st.info("👋 왼쪽의 '다른 주제 보기'를 열어 아티클을 선택하거나, articles 폴더에 HTML 파일을 넣어주세요!")
+
+# 5. 구글 애널리틱스 투명 트래커 실행 (백그라운드 트래픽 집계)
+components.html(GA_SCRIPT, height=0, width=0)
