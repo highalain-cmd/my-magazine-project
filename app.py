@@ -13,7 +13,7 @@ MAIN_TITLE_LINE2 = "내가 알아봤다"
 
 TOGGLE_MENU_NAME = "📂 다른 주제 보기"
 
-# [1] 구글 애널리틱스 코드 (확인하신 진짜 트래커 ID 주입 완료!)
+# [1] 구글 애널리틱스 코드 (확인하신 진짜 트래커 ID 반영 완료)
 GA_SCRIPT = """
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-527EP6QCNY"></script>
 <script>
@@ -25,8 +25,7 @@ GA_SCRIPT = """
 </script>
 """
 
-# [2] 디스커스 댓글창 설정 (디스커스 가입 후 발급받은 숏네임을 여기에 적으세요!)
-# 예: 디스커스 주소가 https://waeng-al.disqus.com 이라면 "waeng-al" 입력
+# [2] 디스커스 댓글창 설정 (확인하신 숏네임 반영 완료)
 DISQUS_SHORTNAME = "buzz-buzz-1"  
 # ========================================================
 
