@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>그래서 가사노동 '젠더 구조'는 정말 바뀌었을까? — 데이터 리뷰</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+<style>
+:root {
+  /* paper & ink */
+  --c-bg: #f5f3ee;
+  --c-surface: #ffffff;
+  --c-ink: #16161a;
+  --c-ink-2: #2f2f36;   /* 본문 — 진하게 */
+  --c-ink-3: #565660;   /* 보조 — 충분히 읽힘 */
+  --c-ink-4: #7d7d88;   /* 캡션/라벨 전용 */
+  --c-ink-5: #aeaeb8;
+  --c-rule: #e2dcd0;
+  --c-rule-strong: #cfc8b8;
+
+  /* accent (deep indigo) */
+  --c-accent: #2a1a7e;
+  --c-accent-2: #5a3fd6;
+  --c-accent-soft: #e9e4ff;
+  --c-accent-softer: #f3f0ff;
+
+  /* semantic */
+  --c-red: #b02218;
+  --c-red-soft: #fcece9;
+  --c-green: #15663a;
+  --c-green-soft: #eaf5ee;
+
+  --ff-display: 'Noto Serif KR', 'Pretendard', serif;            /* 큰 숫자 전용(포인트) */
+  --ff-title: 'Pretendard', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Apple SD Gothic Neo', sans-serif; /* 제목 — 애플 스타일 */
+  --ff-body: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+
+  --fw-normal: 400; --fw-medium: 500; --fw-semi: 600; --fw-bold: 700; --fw-black: 800;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background:
+    radial-gradient(circle at 18% -8%, #fbf9f4 0%, transparent 55%),
+    var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--ff-body);
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "tnum" 0;
+}
+
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--c-surface);
+  border-left: 1px solid var(--c-rule);
+  border-right: 1px solid var(--c-rule);
+  box-shadow: 0 0 60px -30px rgba(40,30,90,0.18);
+}
+
+/* numerals: tabular for data */
+.num, .data-table td, .rate-value, .pct-row-val, .stat-big,
+.circle-num, .age-rate, .time-change, .time-pill { font-feature-settings: "tnum" 1; }
+
+/* ─────────── 상단 액센트 바 ─────────── */
+.topbar { height: 5px; background: linear-gradient(90deg, var(--c-accent) 0%, var(--c-accent-2) 60%, #8f78ff 100%); }
+
+/* ─────────── HERO ─────────── */
+.hero { padding: 72px 56px 44px; position: relative; }
+.eyebrow {
+  font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--c-accent-2); font-weight: var(--fw-bold);
+  display: inline-flex; align-items: center; gap: 9px; margin-bottom: 30px;
+}
+.eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--c-accent-2); display: inline-block; }
+
+/* 윗줄: 정부 발표 인용 — 작게, 보조적으로 */
+.hero-quote {
+  font-size: 17px; line-height: 1.55; color: var(--c-ink-3);
+  font-weight: var(--fw-medium); letter-spacing: -0.01em;
+  padding-left: 16px; border-left: 3px solid var(--c-rule-strong);
+  margin-bottom: 22px;
+}
+.hero-quote b { color: var(--c-ink-2); font-weight: var(--fw-bold); }
+
+/* 아랫줄: 진짜 헤드라인 — 크고 강하게 */
+.hero-title {
+  font-family: var(--ff-title);
+  font-size: 50px; font-weight: var(--fw-black);
+  line-height: 1.2; letter-spacing: -0.035em; color: var(--c-ink);
+}
+.hero-title em { font-style: normal; color: var(--c-accent); position: relative; white-space: nowrap; }
+.hero-title em::after {
+  content: ""; position: absolute; left: -1px; right: -1px; bottom: 4px; height: 11px;
+  background: var(--c-accent-soft); z-index: -1; border-radius: 2px;
+}
+
+.hero-divider { width: 46px; height: 3px; background: var(--c-accent); margin: 32px 0 26px; border-radius: 2px; }
+.hero-meta { display: flex; gap: 32px; flex-wrap: wrap; padding-top: 24px; border-top: 1px solid var(--c-rule); }
+.hero-meta-item { font-size: 12px; color: var(--c-ink-4); letter-spacing: 0.01em; }
+.hero-meta-item span { color: var(--c-ink-2); font-weight: var(--fw-semi); display: block; margin-top: 3px; font-size: 12.5px; }
+
+/* ─────────── INTRO ─────────── */
+.intro-wrap { padding: 8px 56px 0; }
+.intro-body-text {
+  font-size: 18px; color: var(--c-ink-2); line-height: 1.85;
+  margin-bottom: 34px; letter-spacing: -0.01em;
+}
+.intro-body-text b { font-weight: var(--fw-bold); color: var(--c-ink); }
+
+.three-changes {
+  background: var(--c-accent-softer);
+  border: 1px solid var(--c-accent-soft);
+  border-radius: 16px; overflow: hidden; margin-bottom: 26px;
+  box-shadow: 0 1px 2px rgba(42,26,126,0.04), 0 18px 40px -28px rgba(42,26,126,0.35);
+}
+.three-changes-header { padding: 17px 26px; border-bottom: 1px solid var(--c-accent-soft); background: rgba(90,63,214,0.07); }
+.three-changes-header-title {
+  font-size: 12px; font-weight: var(--fw-bold); letter-spacing: 0.13em;
+  text-transform: uppercase; color: var(--c-accent);
+}
+.change-item { display: flex; align-items: flex-start; gap: 16px; padding: 19px 26px; border-bottom: 1px solid var(--c-accent-soft); }
+.change-item:last-child { border-bottom: none; }
+.change-num {
+  width: 27px; height: 27px; background: var(--c-accent); color: #fff; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 13px;
+  font-weight: var(--fw-bold); flex-shrink: 0; margin-top: 2px; font-family: var(--ff-body);
+}
+.change-text { font-size: 15.5px; font-weight: var(--fw-semi); color: var(--c-ink); line-height: 1.5; letter-spacing: -0.01em; }
+
+.intro-punchline { display: none; }
+
+/* ─────────── SECTION ─────────── */
+.section { padding: 64px 56px; }
+.section + .section { border-top: 1px solid var(--c-rule); }
+.intro-wrap + .section { border-top: 1px solid var(--c-rule); margin-top: 56px; }
+
+.section-kicker { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.section-num {
+  font-family: var(--ff-title); font-size: 15px; font-weight: var(--fw-bold);
+  color: #fff; background: var(--c-accent); width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; letter-spacing: 0; flex-shrink: 0;
+}
+.section-kicker-label { font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-ink-4); font-weight: var(--fw-bold); }
+.section-title {
+  font-family: var(--ff-title); font-size: 30px; font-weight: var(--fw-black);
+  letter-spacing: -0.032em; line-height: 1.34; margin-bottom: 30px; color: var(--c-ink);
+}
+
+.sub-title {
+  font-size: 19.5px; font-weight: var(--fw-bold); color: var(--c-ink);
+  margin: 46px 0 20px; line-height: 1.5; letter-spacing: -0.02em;
+  padding: 4px 0 4px 16px; border-left: 4px solid var(--c-accent);
+}
+
+/* ── 본문: 문단 구분 뚜렷하게 ── */
+.body-text {
+  font-size: 17px; color: var(--c-ink-2); line-height: 1.82;
+  margin-bottom: 30px; letter-spacing: -0.01em;
+}
+.body-text:last-child { margin-bottom: 0; }
+.body-text b { font-weight: var(--fw-bold); color: var(--c-ink); }
+/* 핵심 문단(전체 강조)은 좌측 마커로 흐름 표시 */
+.body-text.lead {
+  padding-left: 18px; border-left: 3px solid var(--c-accent-soft);
+}
+
+/* ─────────── FORMULA / NOTE ─────────── */
+.formula-box {
+  background: var(--c-accent-softer); border: 1px solid var(--c-accent-soft);
+  border-radius: 14px; padding: 24px 28px; margin: 30px 0; font-size: 17.5px;
+  font-weight: var(--fw-bold); color: var(--c-ink); letter-spacing: -0.01em; line-height: 1.65; text-align: center;
+}
+.formula-box .accent { color: var(--c-accent-2); }
+.formula-box .op { color: var(--c-ink-4); margin: 0 4px; font-weight: var(--fw-medium); }
+
+.note-box {
+  background: #fffae8; border: 1px solid #ecd58a; border-left: 4px solid #d9b73c;
+  border-radius: 12px; padding: 16px 20px; margin: 22px 0; font-size: 15px;
+  font-weight: var(--fw-semi); color: var(--c-ink-2); line-height: 1.65;
+  display: flex; align-items: flex-start; gap: 11px;
+}
+.note-box::before { content: '핵심'; flex-shrink: 0; background: #d9b73c; color: #fff; font-size: 10.5px; font-weight: var(--fw-bold); letter-spacing: 0.05em; padding: 3px 8px; border-radius: 6px; margin-top: 2px; }
+
+/* ─────────── DATA TABLE ─────────── */
+.data-table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 15px; }
+.data-table thead tr { border-bottom: 2px solid var(--c-ink); }
+.data-table th {
+  text-align: left; padding: 11px 16px; color: var(--c-ink-3); font-weight: var(--fw-bold);
+  font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.07em;
+}
+.data-table th:not(:first-child), .data-table td:not(:first-child) { text-align: right; }
+.data-table td { padding: 14px 16px; border-bottom: 1px solid var(--c-rule); color: var(--c-ink-2); font-size: 15.5px; line-height: 1.4; }
+.data-table tbody tr:nth-child(even) td { background: #faf9f5; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table td:first-child { color: var(--c-ink); font-weight: var(--fw-semi); }
+.data-table td.accent { color: var(--c-accent); font-weight: var(--fw-bold); }
+.data-table td.neg { color: var(--c-ink-3); font-weight: var(--fw-semi); }
+.data-table td.pos-bad { color: var(--c-red); font-weight: var(--fw-bold); }
+
+/* ─────────── CARD ─────────── */
+.card {
+  margin: 32px 0; border: 1px solid var(--c-rule); border-radius: 18px; overflow: hidden;
+  background: var(--c-surface);
+  box-shadow: 0 1px 2px rgba(30,20,60,0.04), 0 22px 48px -30px rgba(30,20,60,0.30);
+}
+.card-header { padding: 20px 28px; border-bottom: 1px solid var(--c-rule); background: #faf9f5; }
+.card-header-title { font-size: 16.5px; font-weight: var(--fw-bold); color: var(--c-ink); letter-spacing: -0.02em; line-height: 1.35; }
+.card-header-sub { font-size: 14px; color: var(--c-ink-3); margin-top: 6px; line-height: 1.5; font-weight: var(--fw-medium); }
+
+/* ─────────── 가로 막대(증가율) ─────────── */
+.rate-bars-body { padding: 28px 28px 26px; display: flex; flex-direction: column; gap: 20px; }
+.rate-row-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 9px; }
+.rate-label { font-size: 16px; font-weight: var(--fw-semi); color: var(--c-ink); letter-spacing: -0.01em; }
+.rate-label.dim { color: var(--c-ink-2); font-weight: var(--fw-semi); }     /* 흐림 → 읽히게 */
+.rate-label.dimmer { color: var(--c-ink-3); font-weight: var(--fw-semi); }
+.rate-value { font-size: 23px; font-weight: var(--fw-black); letter-spacing: -0.02em; line-height: 1; }
+.rate-value.top { color: var(--c-accent); }
+.rate-value.mid { color: var(--c-ink-2); }   /* 회색→진하게 */
+.rate-value.low { color: var(--c-ink-3); }
+.rate-track { background: #ece9f6; border-radius: 7px; height: 14px; overflow: hidden; }
+.rate-fill { height: 100%; border-radius: 7px; }
+.rate-row.is-top .rate-track { box-shadow: 0 0 0 1px rgba(42,26,126,0.18); }
+
+/* ─────────── 기혼 남성 +5분 ─────────── */
+.five-min-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; }
+.five-min-left {
+  padding: 36px 28px; border-right: 1px solid var(--c-rule);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  background: linear-gradient(180deg, #fbf8f1, #f7f3ea);
+}
+.five-min-label { font-size: 11.5px; color: var(--c-ink-4); letter-spacing: 0.1em; text-transform: uppercase; text-align: center; font-weight: var(--fw-bold); }
+.five-min-big {
+  font-family: var(--ff-display); font-size: 76px; font-weight: var(--fw-black);
+  color: var(--c-ink); line-height: 1; letter-spacing: -0.04em;   /* 연회색→진한 잉크 */
+}
+.five-min-sub {
+  font-size: 13.5px; color: #fff; background: var(--c-red); font-weight: var(--fw-bold);
+  padding: 4px 12px; border-radius: 100px; margin-top: 6px; letter-spacing: 0;
+}
+.five-min-right { padding: 30px 28px; display: flex; flex-direction: column; gap: 24px; justify-content: center; }
+.five-min-right-label { font-size: 11.5px; color: var(--c-ink-4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; font-weight: var(--fw-bold); }
+.pct-row-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 9px; }
+.pct-row-label { font-size: 15px; font-weight: var(--fw-semi); color: var(--c-ink); }
+.pct-row-label.dim { color: var(--c-ink-3); font-weight: var(--fw-semi); font-size: 14.5px; }
+.pct-row-val { font-size: 32px; font-weight: var(--fw-black); color: var(--c-accent); line-height: 1; letter-spacing: -0.03em; }
+.pct-row-val.dim { color: var(--c-ink-3); font-size: 27px; }   /* 연회색→진하게 */
+.pct-track { background: #ece9f6; border-radius: 6px; height: 11px; overflow: hidden; }
+.pct-fill { height: 100%; border-radius: 6px; }
+
+/* ─────────── 기혼 남녀 원형 비교 ─────────── */
+.circle-compare { padding: 40px 28px 30px; }
+.circle-compare-inner { display: flex; align-items: flex-end; justify-content: center; gap: 36px; }
+.circle-col { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.circle-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+.circle-num { font-family: var(--ff-display); font-weight: var(--fw-black); letter-spacing: -0.03em; line-height: 1; }
+.circle-unit { font-size: 13px; font-weight: var(--fw-semi); color: var(--c-ink-3); }
+.circle-col-name { font-size: 14.5px; font-weight: var(--fw-bold); color: var(--c-ink-2); letter-spacing: -0.01em; }
+.circle-multiplier {
+  background: var(--c-ink); color: #fff; border-radius: 100px; padding: 12px 24px; font-size: 15px;
+  font-weight: var(--fw-bold); letter-spacing: -0.01em; margin-top: 18px; text-align: center;
+}
+.circle-multiplier span { color: #b9a4ff; font-size: 22px; }
+
+/* ─────────── 연령대 막대 ─────────── */
+.age-bars { margin: 6px 0 18px; display: flex; flex-direction: column; gap: 13px; }
+.age-row { display: flex; align-items: center; gap: 14px; }
+.age-label { font-size: 14px; color: var(--c-ink-2); width: 74px; flex-shrink: 0; font-weight: var(--fw-semi); }
+.age-label.hi { color: var(--c-accent); font-weight: var(--fw-bold); }
+.age-bar-wrap { flex: 1; background: #ece9f6; border-radius: 6px; height: 38px; overflow: hidden; }
+.age-bar { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 14px; }
+.age-bar span { font-size: 14px; font-weight: var(--fw-bold); white-space: nowrap; color: var(--c-ink); }
+.age-rate { font-size: 15px; font-weight: var(--fw-bold); width: 62px; text-align: right; flex-shrink: 0; }
+
+.callout {
+  background: var(--c-accent-softer); border: 1px solid var(--c-accent-soft);
+  border-radius: 12px; padding: 16px 20px; margin-top: 6px;
+}
+.callout-title { font-size: 13px; font-weight: var(--fw-bold); color: var(--c-accent); margin-bottom: 5px; letter-spacing: -0.01em; }
+.callout-body { font-size: 13.5px; color: var(--c-ink-2); line-height: 1.6; }
+.callout-body b { color: var(--c-ink); font-weight: var(--fw-bold); }
+
+/* ─────────── 통계 3분할 / 시간 비교 ─────────── */
+.stat-grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+.stat-cell { padding: 28px 24px; }
+.stat-cell + .stat-cell { border-left: 1px solid var(--c-rule); }
+.stat-tag { font-size: 11.5px; color: var(--c-ink-4); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 14px; font-weight: var(--fw-bold); }
+.stat-big { font-family: var(--ff-display); font-size: 42px; font-weight: var(--fw-black); line-height: 1; letter-spacing: -0.03em; margin-bottom: 11px; }
+.stat-big.up { color: var(--c-accent); }
+.stat-big.dn { color: var(--c-green); }
+.stat-desc { font-size: 13.5px; color: var(--c-ink-2); line-height: 1.5; font-weight: var(--fw-medium); }
+
+.time-compare { padding: 6px 0; }
+.time-row { display: flex; align-items: center; gap: 14px; padding: 17px 28px; border-bottom: 1px solid var(--c-rule); }
+.time-row:last-child { border-bottom: none; }
+.time-label { font-size: 16px; color: var(--c-ink-2); flex: 1; letter-spacing: -0.01em; font-weight: var(--fw-semi); }
+.time-label.bold { font-weight: var(--fw-bold); color: var(--c-accent); }
+.time-label.red { color: var(--c-red); font-weight: var(--fw-bold); }
+.time-pills { display: flex; align-items: center; gap: 8px; }
+.time-pill { font-size: 14px; font-weight: var(--fw-bold); padding: 6px 13px; border-radius: 100px; background: #f1eff8; color: var(--c-ink-2); letter-spacing: -0.01em; border: 1px solid var(--c-rule); }
+.time-arrow { font-size: 12px; color: var(--c-ink-4); }
+.time-change { font-size: 17px; font-weight: var(--fw-black); width: 56px; text-align: right; flex-shrink: 0; letter-spacing: -0.01em; }
+.time-change.zero { color: var(--c-accent); }
+.time-change.neg { color: var(--c-ink-3); }
+.time-change.pos-bad { color: var(--c-red); }
+
+.big-stat-block { padding: 34px 28px 30px; }
+.big-stat-tag { font-size: 14px; font-weight: var(--fw-bold); letter-spacing: -0.01em; margin-bottom: 12px; }
+.big-stat-num { font-family: var(--ff-display); font-weight: var(--fw-black); line-height: 1; letter-spacing: -0.04em; margin-bottom: 12px; }
+.big-stat-desc { font-size: 15px; font-weight: var(--fw-semi); }
+
+/* ─────────── CONCLUSION ─────────── */
+.conclusion { padding: 64px 56px; background: var(--c-ink); color: #fff; position: relative; overflow: hidden; }
+.conclusion::before {
+  content: ""; position: absolute; top: -80px; right: -80px; width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(122,96,255,0.30), transparent 70%); pointer-events: none;
+}
+.conclusion-kicker { font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #b9a4ff; font-weight: var(--fw-bold); margin-bottom: 16px; }
+.conclusion-title { font-family: var(--ff-title); font-size: 30px; font-weight: var(--fw-black); color: #fff; margin-bottom: 24px; letter-spacing: -0.032em; line-height: 1.34; }
+.conclusion-body { font-size: 17px; color: rgba(255,255,255,0.78); line-height: 1.9; letter-spacing: -0.005em; position: relative; }
+.conclusion-body + .conclusion-body { margin-top: 22px; }
+.conclusion-body b { font-weight: var(--fw-bold); color: #fff; }
+
+/* ─────────── SOURCES ─────────── */
+.sources { padding: 38px 56px 46px; border-top: 1px solid var(--c-rule); background: #efece5; }
+.sources-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--c-ink-4); margin-bottom: 16px; font-weight: var(--fw-bold); }
+.source-item { font-size: 12.5px; color: var(--c-ink-3); padding: 5px 0; line-height: 1.6; }
+
+/* ─────────── REVEAL ANIMATION ─────────── */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+.reveal.is-visible { opacity: 1; transform: none; }
+.hero-anim { opacity: 0; transform: translateY(14px); animation: rise 0.8s cubic-bezier(0.22,1,0.36,1) forwards; }
+.hero-anim.d1 { animation-delay: 0.05s; }
+.hero-anim.d2 { animation-delay: 0.16s; }
+.hero-anim.d3 { animation-delay: 0.28s; }
+.hero-anim.d4 { animation-delay: 0.40s; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .hero-anim { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+}
+
+/* ─────────── MOBILE ─────────── */
+@media (max-width: 640px) {
+  .page { border-left: none; border-right: none; }
+  .hero { padding: 48px 24px 36px; }
+  .hero-title { font-size: 33px; }
+  .hero-quote { font-size: 15.5px; }
+  .intro-wrap { padding: 8px 24px 0; }
+  .intro-body-text { font-size: 16.5px; }
+  .section { padding: 48px 24px; }
+  .section-title { font-size: 25px; }
+  .sub-title { font-size: 17.5px; }
+  .body-text { font-size: 16.5px; }
+  .conclusion { padding: 48px 24px; }
+  .conclusion-title { font-size: 25px; }
+  .sources { padding: 32px 24px; }
+  .five-min-grid { grid-template-columns: 1fr; }
+  .five-min-left { border-right: none; border-bottom: 1px solid var(--c-rule); }
+  .five-min-big { font-size: 64px; }
+  .stat-grid3 { grid-template-columns: 1fr; }
+  .stat-cell + .stat-cell { border-left: none; border-top: 1px solid var(--c-rule); }
+  .circle-compare-inner { gap: 18px; }
+  .data-table { font-size: 14px; }
+  .data-table th, .data-table td { padding: 11px 10px; }
+  .time-row { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="topbar"></div>
+
+<!-- ─── HERO ─── -->
+<header class="hero">
+  <div class="eyebrow hero-anim d1">데이터 리뷰 · 2024 가계생산위성계정</div>
+  <p class="hero-quote hero-anim d2">국가데이터처 발표 — <b>“남성 가사노동 부담 늘었다”</b></p>
+  <h1 class="hero-title hero-anim d3">그래서 가사노동 <em>‘젠더 구조’</em>는<br>정말 바뀌었을까?</h1>
+  <div class="hero-divider hero-anim d4"></div>
+  <div class="hero-meta hero-anim d4">
+    <div class="hero-meta-item">출처<span>가계생산위성계정 · 생활시간조사 · 경제활동인구조사</span></div>
+    <div class="hero-meta-item">비교 기간<span>2019 → 2024</span></div>
+  </div>
+</header>
+
+<!-- ─── INTRO ─── -->
+<div class="intro-wrap">
+  <p class="intro-body-text reveal" style="padding-top:40px;">지난 4월, 국가데이터처가 꽤 흥미로운 통계를 하나 공개했음. <b>집안일의 가치를 실제 돈으로 환산해서 발표</b>한 건데, 5년 전이랑 비교했을 때 눈에 띄는 변화가 딱 세 가지 있었음.</p>
+
+  <div class="three-changes reveal">
+    <div class="three-changes-header">
+      <div class="three-changes-header-title">정부가 발표한 세 가지 변화</div>
+    </div>
+    <div class="change-item">
+      <div class="change-num">1</div>
+      <div class="change-text">집안일의 가치, 최근 5년 사이에 엄청 올랐음.</div>
+    </div>
+    <div class="change-item">
+      <div class="change-num">2</div>
+      <div class="change-text">일하는 여성이 늘면서 전업주부 형태의 가사노동 비중이 줄었음.</div>
+    </div>
+    <div class="change-item">
+      <div class="change-num">3</div>
+      <div class="change-text">미혼 남성이랑 기혼 남성의 가사노동 비중이 늘었음.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 섹션 01 ─── -->
+<div class="section">
+  <div class="section-kicker reveal">
+    <span class="section-num">01</span>
+    <span class="section-kicker-label">Section</span>
+  </div>
+  <h2 class="section-title reveal">집안일의 가치, 이제야 슬슬 조명 받고 있긴 한데</h2>
+  <p class="body-text reveal">먼저 긍정적인 소식부터.</p>
+  <p class="body-text reveal">무급 가사노동의 가치를 계산하는 방식은 이러함.</p>
+  <div class="formula-box reveal">
+    집안일 가치 <span class="op">=</span> <span class="accent">가사노동 시간</span> <span class="op">×</span> <span class="accent">가사노동 인구</span> <span class="op">×</span> <span class="accent">대체임금</span>
+  </div>
+  <p class="body-text reveal">여기서 <b>‘대체임금’이란, 그 집안일을 밖에서 사람을 고용해 맡길 때 줘야 하는 시간당 임금</b>임. 요리는 조리사 임금으로, 청소는 청소 종사자 임금으로 환산하는 식임.</p>
+  <p class="body-text reveal"><b>이 대체임금이 5년(2019~2024년) 사이에 꽤 많이 올랐음.</b> 가사노동과 유사한 일을 하는 ‘서비스 종사자’의 시간당 임금은 25.9% 올랐고, ‘단순노무 종사자’는 20.8% 올랐음. 덕분에 가사노동 평가액도 덩달아 20% 올랐음.</p>
+
+  <table class="data-table reveal">
+    <thead>
+      <tr><th>요소</th><th>2019</th><th>2024</th><th>변화율</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1인 1일 평균 가사노동 시간</td><td>137분</td><td>132분</td><td class="neg">-3.8%</td></tr>
+      <tr><td>가사노동 인구</td><td>4,238만명</td><td>4,346만명</td><td class="accent">+2.6%</td></tr>
+      <tr><td>시간당 가치 (대체임금)</td><td>13,737원</td><td>16,698원</td><td class="accent">+21.6%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note-box reveal">전체 가사노동 시간은 줄었지만, 대체임금 수준이 높아져서 가사노동 가치 평가액도 높아진 거임!</div>
+  <p class="body-text reveal">물론 한계는 있음. <b>이건 어디까지나 “시장에서 비슷한 일을 하면 얼마를 받느냐”를 기준으로 한 정량 평가임. 매일 가족을 위해 쌓아온 정성이나 돌봄의 질 같은 건 숫자에 담기지 않음.</b> 그럼에도 정량적으로라도 가사노동의 가치가 올라간 건, 나름 의미 있는 변화로 볼 수 있음.</p>
+</div>
+
+<!-- ─── 섹션 02 ─── -->
+<div class="section">
+  <div class="section-kicker reveal">
+    <span class="section-num">02</span>
+    <span class="section-kicker-label">Section</span>
+  </div>
+  <h2 class="section-title reveal">“남성이 가사노동을 더 하게 됐다”는 정부 발표의 실체</h2>
+  <p class="body-text reveal">정부 브리핑에서 유독 눈에 띄는 대목이 있었음. 바로 <b>‘남성의 가사노동 비중이 눈에 띄게 증가했다’는 발표</b>였음. 미혼 남성을 중심으로 집안일 하는 시간이 늘었고, 기혼 남성의 가사 분담 비율도 높아졌다는 내용이었음.</p>
+  <p class="body-text reveal">통계의 겉표면만 보면 이 말은 사실처럼 보임. 실제로 미혼 남성의 가사노동 평가액 증가율은 68.7%로 모든 집단 중 압도적 1위를 기록했고, 기혼 남성이 가사노동 전체에서 차지하는 비중도 1.5%p 늘었으니까. 얼핏 들으면 “요즘 남성들이 가치관도 바뀌고, 집안일도 적극적으로 분담하기 시작했나 보네” 싶은 훈훈한 그림임.</p>
+  <p class="body-text reveal">하지만 가사노동 가치 평가액의 산출 기준과 인구 변화를 교차 검증해 보면, 미혼과 기혼 두 집단의 통계 증가 요인은 정부의 설명과 다른 인과관계를 나타내고 있음.</p>
+
+  <!-- 평가액 증가율 비교 -->
+  <div class="card reveal">
+    <div class="card-header">
+      <div class="card-header-title">혼인상태·성별 가사노동 평가액 증가율 (2019→2024)</div>
+    </div>
+    <div class="rate-bars-body">
+      <div class="rate-row is-top">
+        <div class="rate-row-meta"><span class="rate-label">미혼 남성</span><span class="rate-value top">68.7%</span></div>
+        <div class="rate-track"><div class="rate-fill" style="width:100%;background:linear-gradient(90deg,var(--c-accent),var(--c-accent-2));"></div></div>
+      </div>
+      <div class="rate-row">
+        <div class="rate-row-meta"><span class="rate-label dim">미혼 여성</span><span class="rate-value mid">47.2%</span></div>
+        <div class="rate-track"><div class="rate-fill" style="width:68.7%;background:#7a64e0;"></div></div>
+      </div>
+      <div class="rate-row">
+        <div class="rate-row-meta"><span class="rate-label dim">기혼 남성</span><span class="rate-value mid">28.9%</span></div>
+        <div class="rate-track"><div class="rate-fill" style="width:42%;background:#9a8aea;"></div></div>
+      </div>
+      <div class="rate-row">
+        <div class="rate-row-meta"><span class="rate-label dimmer">전체 평균</span><span class="rate-value low">20.0%</span></div>
+        <div class="rate-track"><div class="rate-fill" style="width:29%;background:#b9aef0;"></div></div>
+      </div>
+      <div class="rate-row">
+        <div class="rate-row-meta"><span class="rate-label dimmer">기혼 여성</span><span class="rate-value low">12.7%</span></div>
+        <div class="rate-track"><div class="rate-fill" style="width:18.5%;background:#cdc5f3;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-title reveal">진짜일까 ① 기혼 남성의 가사 분담이 늘었다? — “5년 동안 고작 5분 늘었음”</div>
+  <p class="body-text reveal">먼저 기혼 남성 부문임. 정부의 발표대로 분담 ‘비중’과 ‘평가액’이 늘어난 것은 맞음. 그런데 비중이 아닌 <b>‘실제 노동 시간’</b>을 꺼내보면 고개가 갸우뚱해짐.</p>
+  <p class="body-text lead reveal"><b>기혼 남성이 하루에 집안일에 쓰는 시간은 60분에서 65분으로, 5년 사이에 겨우 ‘5분’ 늘어나는 데 그쳤기 때문.</b></p>
+  <p class="body-text reveal"><b>고작 5분 더 일했는데, 어떻게 평가액은 28.9%나 급증할 수 있었을까?</b> 답은 앞서 01섹션에서 보았던 ‘시장의 임금 상승’에 있음. <b>기혼 남성의 가사 가치 평가액이 늘어난 원인을 쪼개보면, 전체 증가분의 75%는 남성이 집안일을 더 많이 해서가 아니라, 청소·조리 종사자 등의 ‘대체임금’이 올랐기 때문에 생긴 착시</b>였음.</p>
+
+  <!-- 기혼 남성 5분 + 임금 상승 -->
+  <div class="card reveal">
+    <div class="card-header">
+      <div class="card-header-title">기혼 남성 가사노동 평가액 증가, 자세히 보면</div>
+      <div class="card-header-sub">평가액은 28.9% 올랐음. 그런데 실제로 집안일에 쓴 시간은?</div>
+    </div>
+    <div class="five-min-grid">
+      <div class="five-min-left">
+        <div class="five-min-label">5년간 실제 증가 시간</div>
+        <div class="five-min-big">+5분</div>
+        <div class="five-min-sub">60분 → 65분</div>
+      </div>
+      <div class="five-min-right">
+        <div class="five-min-right-label">평가액 증가 원인 분해</div>
+        <div>
+          <div class="pct-row-meta"><span class="pct-row-label">임금 상승 효과</span><span class="pct-row-val">75%</span></div>
+          <div class="pct-track"><div class="pct-fill" style="width:75%;background:linear-gradient(90deg,var(--c-accent),var(--c-accent-2));"></div></div>
+        </div>
+        <div>
+          <div class="pct-row-meta"><span class="pct-row-label dim">집안일 시간 증가 효과</span><span class="pct-row-val dim">25%</span></div>
+          <div class="pct-track"><div class="pct-fill" style="width:25%;background:#b9aef0;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="body-text lead reveal"><b>5분 더 움직인 기혼 남성 곁에서, 기혼 여성은 여전히 하루 평균 3시간 45분을 가사노동에 쓰고 있음. 여성이 남성보다 3.5배 더 많은 시간을 가사에 할애하고 있는 것이 현실임.</b></p>
+
+  <!-- 기혼 남녀 원형 비교 -->
+  <div class="card reveal">
+    <div class="card-header">
+      <div class="card-header-title">기혼 남녀 하루 평균 가사노동 시간 비교 (2024)</div>
+    </div>
+    <div class="circle-compare">
+      <div class="circle-compare-inner">
+        <div class="circle-col">
+          <div class="circle-wrap" style="width:96px;height:96px;border-radius:50%;background:var(--c-accent-soft);border:2px solid #b9aef0;flex-direction:column;">
+            <div class="circle-num" style="font-size:24px;color:var(--c-ink-2);">65</div>
+            <div class="circle-unit">분</div>
+          </div>
+          <div class="circle-col-name" style="color:var(--c-ink-2);">기혼 남성</div>
+        </div>
+        <div style="font-size:22px;color:var(--c-ink-4);font-weight:700;margin-bottom:62px;">vs</div>
+        <div class="circle-col">
+          <div class="circle-wrap" style="width:196px;height:196px;border-radius:50%;background:linear-gradient(150deg,var(--c-accent),var(--c-accent-2));border:3px solid var(--c-accent);flex-direction:column;gap:4px;box-shadow:0 18px 40px -16px rgba(42,26,126,0.55);">
+            <div class="circle-num" style="font-size:46px;color:#fff;">225</div>
+            <div class="circle-unit" style="color:rgba(255,255,255,0.78);">분 (3시간 45분)</div>
+          </div>
+          <div class="circle-col-name" style="color:var(--c-accent);font-weight:700;">기혼 여성</div>
+        </div>
+      </div>
+      <div class="circle-multiplier" style="display:block;max-width:340px;margin:22px auto 0;">여성이 남성보다 <span>3.5배</span> 더 많은 시간을 가사에 씀</div>
+    </div>
+  </div>
+
+  <div class="sub-title reveal">진짜일까 ② 미혼 남성이 주도한 가사 총량 증가? — “2030의 참여가 아닌, 고령층의 생존형 노동”</div>
+  <p class="body-text reveal">그렇다면 가사 가치 평가액이 68.7%나 폭증한 미혼 남성 집단은 어떨까? <b>정부는 미혼 남성의 가사 가치 증가 원인으로 ‘1인 가구의 증가’를 꼽았음. 혼자 살면 밥도, 청소도 스스로 해야 하니 가사 총량이 늘어난다는 논리</b>임. 맞음. 실제로 지난 5년간 남자 1인 가구는 302만 명에서 400만 명으로 크게 늘었음.</p>
+  <p class="body-text reveal">하지만 정부 브리핑에서 쏙 빠진 핵심 질문이 있음. “과연 ‘어떤 연령대’의 1인 가구가 늘어났고, 그들은 혼자 살 때 가사노동을 얼마나 더 하는가?”임.</p>
+  <p class="body-text reveal"><b>실제 통계청의 생활시간조사 데이터를 연령별로 쪼개어 분석해 보면 아주 흥미로운 사실이 드러남.</b></p>
+
+  <table class="data-table reveal">
+    <thead>
+      <tr><th>연령대</th><th>1인가구</th><th>다인가구</th><th>차이</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>20대</td><td>55분</td><td>31분</td><td class="accent">+24분</td></tr>
+      <tr><td>30대</td><td>61분</td><td>78분</td><td class="neg">-17분</td></tr>
+      <tr><td>40대</td><td>62분</td><td>68분</td><td class="neg">-7분</td></tr>
+      <tr><td>50대</td><td>82분</td><td>49분</td><td class="accent">+33분</td></tr>
+      <tr><td>60대</td><td>110분</td><td>56분</td><td class="accent">+54분</td></tr>
+      <tr><td>70대</td><td>121분</td><td>65분</td><td class="accent">+56분</td></tr>
+      <tr><td>80대 이상</td><td>116분</td><td>58분</td><td class="accent">+58분</td></tr>
+    </tbody>
+  </table>
+
+  <p class="body-text reveal"><b>데이터를 보면 30대와 40대 남성은 오히려 혼자 살 때보다 누군가와 함께 살 때 가사 시간이 좀 더 긴 걸로 나옴.</b> 결혼을 하고 가정을 꾸리면서 아이 돌봄이나 집안일을 분담할 책임이 생기기 때문으로 추정됨. 달리 말하면, 3040 남성들은 결혼을 하지 않고 혼자 산다고 해서 가사노동에 유의미한 시간을 더 쏟지 않는다는 뜻이기도 함.</p>
+  <p class="body-text reveal"><b>그럼 대체 어느 집단이 미혼 남성의 가사노동 비중을 높였을까?</b></p>
+
+  <!-- 연령대별 1인 가구 증가 -->
+  <div class="card reveal">
+    <div class="card-header">
+      <div class="card-header-title">남자 1인 가구 증가 — 연령대별 비교 (2019→2024)</div>
+    </div>
+    <div style="padding:26px 28px 26px;">
+      <div class="age-bars">
+        <div class="age-row">
+          <div class="age-label">20~39세</div>
+          <div class="age-bar-wrap"><div class="age-bar" style="width:40%;background:#cdc5f3;"><span>125만 → 157만명</span></div></div>
+          <div class="age-rate" style="color:var(--c-ink-3);">+25.7%</div>
+        </div>
+        <div class="age-row">
+          <div class="age-label">40~59세</div>
+          <div class="age-bar-wrap"><div class="age-bar" style="width:32%;background:#cdc5f3;"><span>111만 → 134만명</span></div></div>
+          <div class="age-rate" style="color:var(--c-ink-3);">+20.7%</div>
+        </div>
+        <div class="age-row">
+          <div class="age-label hi">60세 이상</div>
+          <div class="age-bar-wrap"><div class="age-bar" style="width:100%;background:linear-gradient(90deg,var(--c-accent),var(--c-accent-2));"><span style="color:#fff;">66만 → 109만명</span></div></div>
+          <div class="age-rate" style="color:var(--c-accent);font-size:16px;">+64.4%</div>
+        </div>
+      </div>
+      <div class="callout">
+        <div class="callout-title">핵심 — 가장 가파른 증가는 60세 이상 고령층</div>
+        <div class="callout-body">고령층은 혼자 살게 되는 순간, 다인 가구 대비 하루 <b>약 54~58분의 가사노동을 추가로 부담</b>함.</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="body-text reveal"><b>최근 5년간 남자 1인 가구 증가 속도가 가장 가팔랐던 집단이 바로 60세 이상 고령층(5년 새 64.4% 증가)임.</b> 연령별로 봐도 20~50대 1인가구의 가사노동 시간에 비해 60세 이상 고령층의 가사노동 시간이 압도적으로 길지 않음? <b>60대 이상 고령층 남성은 혼자 살게 되는 순간, 누군가와 함께 살 때보다 하루에 무려 1시간 가까운 가사노동을 더 부담함. 다인 가구일 때 다른 가족에게 의존하던 가사노동을, 혼자가 되는 순간 고스란히 본인이 직접 떠안는 구조</b>인 거임.</p>
+  <p class="body-text lead reveal"><b>결국 고령층의 어쩔 수 없는 ‘생존형 가사노동’ 증가가 전체 미혼 남성의 가사노동 총량을 끌어올린 실질적인 배경임. 남성의 가사 분담 의지나 가치관이 변화한 듯 함축한 정부의 브리핑은, 실제 인구 구조 변화와 연령별 노동 시간의 특성을 고려하지 않은 설익은 해석</b>인 셈.</p>
+</div>
+
+<!-- ─── 섹션 03 ─── -->
+<div class="section">
+  <div class="section-kicker reveal">
+    <span class="section-num">03</span>
+    <span class="section-kicker-label">Section</span>
+  </div>
+  <h2 class="section-title reveal">여성의 가사노동은 줄어든 것이 아니라 이름표만 바뀐 것</h2>
+  <p class="body-text reveal">이번에는 <b>“여성의 경제활동이 늘면서 전업주부의 가사 가치가 감소했다”</b>는 정부 브리핑을 뜯어볼 차례. 실제로 정부 말이 틀린 건 아님. 2019년 대비 2024년 여성 취업자는 99만 2천 명 늘었고, 비취업 여성은 43만 3천 명 줄었음. <b>비취업 여성 상당수가 실제로 취업 집단으로 이동했고, 통계청 생활시간조사에서도 비취업 여성의 하루 평균 가사노동 시간은 5년 새 7분 감소</b>했음. 일하는 여성이 늘어나면서 전업주부 집단이 만들어내는 가사 가치 총량이 줄어든 건 자연스러운 흐름임.</p>
+
+  <!-- 여성 경제활동 변화 -->
+  <div class="card reveal">
+    <div class="card-header">
+      <div class="card-header-title">여성 경제활동 변화 (2019→2024)</div>
+    </div>
+    <div class="stat-grid3">
+      <div class="stat-cell">
+        <div class="stat-tag">여성 취업자</div>
+        <div class="stat-big up">+99만명</div>
+        <div class="stat-desc">비취업 → 취업 집단으로 이동</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-tag">여성 비경제활동인구</div>
+        <div class="stat-big dn">-43만명</div>
+        <div class="stat-desc">전업주부 집단 축소</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-tag">비취업 여성 가사노동</div>
+        <div class="stat-big dn">-7분</div>
+        <div class="stat-desc">3시간 50분 → 3시간 43분</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="body-text lead reveal"><b>그럼 ‘전업주부’가 줄어든 만큼 여성 전체의 가사노동 부담도 완화되었다고 볼 수 있을까? 그렇지 않음.</b></p>
+  <p class="body-text reveal"><b>일단 취업 여성의 하루 평균 가사노동 시간은 5년 전과 비교해 단 ‘0분’도 줄어들지 않았음. 일과 집안일을 동시에 짊어지는 이중 부담 구조가 그대로 유지되고 있다는 뜻임. 심지어 아내가 생계를 책임지는 ‘아내 외벌이’ 가구의 경우, 일하는 아내의 가사노동 시간은 오히려 32분 증가했음.</b></p>
+
+  <!-- 취업 상태별 가사노동 시간 비교 -->
+  <div class="card reveal">
+    <div class="card-header">
+      <div class="card-header-title">취업 상태별 여성 하루 평균 가사노동 시간 변화 (2019→2024)</div>
+    </div>
+    <div class="time-compare">
+      <div class="time-row" style="background:var(--c-accent-softer);border-bottom:1px solid var(--c-accent-soft);">
+        <div class="time-label bold">취업 여성</div>
+        <div class="time-pills">
+          <div class="time-pill" style="background:var(--c-accent-soft);border-color:#b9aef0;color:var(--c-accent);">2:24</div>
+          <div class="time-arrow" style="color:var(--c-accent-2);">→</div>
+          <div class="time-pill" style="background:var(--c-accent-soft);border-color:#b9aef0;color:var(--c-accent);">2:24</div>
+        </div>
+        <div class="time-change zero">0분</div>
+      </div>
+      <div class="time-row">
+        <div class="time-label">비취업 여성</div>
+        <div class="time-pills">
+          <div class="time-pill">3:50</div>
+          <div class="time-arrow">→</div>
+          <div class="time-pill">3:43</div>
+        </div>
+        <div class="time-change neg">-7분</div>
+      </div>
+      <div class="time-row" style="background:var(--c-red-soft);">
+        <div class="time-label red">외벌이(아내취업) 아내</div>
+        <div class="time-pills">
+          <div class="time-pill" style="background:#fbe2df;border-color:#e9b3ac;color:var(--c-red);">2:33</div>
+          <div class="time-arrow">→</div>
+          <div class="time-pill" style="background:#fbe2df;border-color:#e9b3ac;color:var(--c-red);">3:05</div>
+        </div>
+        <div class="time-change pos-bad">+32분</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="body-text reveal">한 가지 의미 있는 변화가 있다면 돌봄의 외주화임. 어린이집, 노인장기요양 같은 공공·시장 서비스가 가계 내 돌봄을 일부 대신해주면서, 기혼 여성의 ‘가족 및 가구원 돌보기’ 평가액은 4.6% 줄었음. 국가와 시장이 아이 돌보고 어른 돌보는 건 조금씩 가져가기 시작한 거임.</p>
+  <p class="body-text reveal">그런데 <b>매일 똑같이 반복되는 살림</b>은 얘기가 다름.</p>
+
+  <!-- 가정관리 평가액 -->
+  <div class="card reveal">
+    <div class="card-header">
+      <div class="card-header-title">기혼 여성 가사노동 항목별 평가액 변화 (2019→2024)</div>
+    </div>
+    <div class="big-stat-block" style="background:var(--c-red-soft);">
+      <div class="big-stat-tag" style="color:var(--c-red);">가정관리 (요리·청소·장보기)</div>
+      <div class="big-stat-num" style="font-size:70px;color:var(--c-red);">+17.8%</div>
+      <div class="big-stat-desc" style="color:var(--c-ink-2);">매일 반복되는 살림은 오히려 증가</div>
+    </div>
+    <div style="padding:22px 28px;border-top:1px solid #e9b3ac;background:#fdf3f1;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+      <div>
+        <div style="font-size:15px;color:var(--c-red);font-weight:700;margin-bottom:5px;letter-spacing:-0.01em;">취업 여성 가정관리 평가액</div>
+        <div style="font-size:13.5px;color:var(--c-ink-2);font-weight:500;">퇴근 후에도 살림은 계속</div>
+      </div>
+      <div class="big-stat-num" style="font-size:50px;color:var(--c-red);margin:0;flex-shrink:0;">+25.2%</div>
+    </div>
+  </div>
+
+  <p class="body-text lead reveal"><b>요리, 청소, 장보기를 포함하는 기혼 여성의 ‘가정관리’ 평가액은 오히려 17.8% 늘었고, 취업 여성의 가정관리 평가액은 25.2%나 급증</b>했음. <b>퇴근 후 엉망이 된 집을 치우고 내일 먹을 식재료를 준비하는 일은 여전히 취업 여성의 몫으로 남아 있다는 것.</b></p>
+</div>
+
+<!-- ─── 결론 ─── -->
+<div class="conclusion">
+  <div class="conclusion-kicker reveal">결론</div>
+  <div class="conclusion-title reveal">여전히 가사노동에 락인(lock-in)된 여성</div>
+  <p class="conclusion-body reveal"><b>결국 여성이 일터로 나간다고 해서 가사노동의 굴레에서 벗어난 건 아님. 어느 집에서든, 어떤 방식으로 일하든 가사노동의 실질적인 무게는 여성이 그대로 감당하고 있음.</b></p>
+  <p class="conclusion-body reveal">전업주부의 가사노동 가치가 줄었다는 정부의 발표는 가사 부담이 가벼워졌다는 의미가 아님. 여성의 가사 부담은 ‘줄어든 것’이 아니라, ‘비취업 여성의 가사’에서 ‘취업 여성의 가사’로 이름표만 바뀐 채 굳건히 유지되고 있음. <b>그게 K-가사노동의 여전한 굴레임.</b></p>
+</div>
+
+<!-- ─── 출처 ─── -->
+<div class="sources">
+  <div class="sources-title">분석 데이터 출처</div>
+  <div class="source-item">· 국가데이터처, 2024년 가계생산위성계정 보도자료 및 브리핑 속기록 (2026.4.29)</div>
+  <div class="source-item">· 통계청, 2019·2024년 생활시간조사 결과 보고서</div>
+  <div class="source-item">· 통계청, 2019·2024년 생활시간조사 마이크로데이터</div>
+  <div class="source-item">· 고용노동부, 고용형태별 근로실태조사 (2019·2024, 6차·7차 직업분류)</div>
+  <div class="source-item">· 통계청, 인구총조사 성·연령 및 세대구성별 인구 (2019·2024)</div>
+  <div class="source-item">· 통계청, 경제활동인구조사 성별 경제활동인구 총괄 및 맞벌이 가구 통계 (2019·2024)</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
