@@ -13,15 +13,15 @@ MAIN_TITLE_LINE2 = "내가 알아봤다"
 
 TOGGLE_MENU_NAME = "📂 다른 주제 보기"
 
-# [1] 구글 애널리틱스 코드 (확인하신 진짜 트래커 ID 반영 완료)
+# [1] 구글 애널리틱스 코드 (새로 발급받으신 진짜 ID 반영)
 GA_SCRIPT = """
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-527EP6QCNY"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N8VCJWW0NW"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-527EP6QCNY');
+  gtag('config', 'G-N8VCJWW0NW');
 </script>
 """
 
