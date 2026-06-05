@@ -13,7 +13,7 @@ MAIN_TITLE_LINE2 = "내가 알아봤다"
 
 TOGGLE_MENU_NAME = "📂 다른 주제 보기"
 
-# [1] 구글 애널리틱스 코드 (iframe 가둠 현상 해결 버전)
+# [1] 구글 애널리틱스 코드 (보안 벽을 우회하는 최종 강제 주입 버전)
 GA_SCRIPT = """
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-N8VCJWW0NW"></script>
 <script>
@@ -21,9 +21,9 @@ GA_SCRIPT = """
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  // 💡 핵심: 격리 창을 뚫고 나와 진짜 스트림릿 주소를 강제로 주입합니다.
+  // 💡 핵심: 부모 창 주소를 읽지 못하는 보안 벽을 우회하기 위해, 진짜 내 주소를 텍스트로 강제 박아버립니다.
   gtag('config', 'G-N8VCJWW0NW', {
-    'page_location': window.parent.location.href
+    'page_location': 'https://buzz-buzz.streamlit.app/'
   });
 </script>
 """
