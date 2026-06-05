@@ -13,7 +13,7 @@ MAIN_TITLE_LINE2 = "내가 알아봤다"
 
 TOGGLE_MENU_NAME = "📂 다른 주제 보기"
 
-# [1] 구글 애널리틱스 코드 (새로 발급받으신 진짜 ID 반영)
+# [1] 구글 애널리틱스 코드 (iframe 가둠 현상 해결 버전)
 GA_SCRIPT = """
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-N8VCJWW0NW"></script>
 <script>
@@ -21,7 +21,10 @@ GA_SCRIPT = """
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-N8VCJWW0NW');
+  // 💡 핵심: 격리 창을 뚫고 나와 진짜 스트림릿 주소를 강제로 주입합니다.
+  gtag('config', 'G-N8VCJWW0NW', {
+    'page_location': window.parent.location.href
+  });
 </script>
 """
 
