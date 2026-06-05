@@ -13,19 +13,9 @@ MAIN_TITLE_LINE2 = "내가 알아봤다"
 
 TOGGLE_MENU_NAME = "📂 다른 주제 보기"
 
-# [1] 구글 애널리틱스 코드 (보안 벽을 우회하는 최종 강제 주입 버전)
-GA_SCRIPT = """
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N8VCJWW0NW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  // 💡 핵심: 부모 창 주소를 읽지 못하는 보안 벽을 우회하기 위해, 진짜 내 주소를 텍스트로 강제 박아버립니다.
-  gtag('config', 'G-N8VCJWW0NW', {
-    'page_location': 'https://buzz-buzz.streamlit.app/'
-  });
-</script>
+# ✅ [1] 구글 대신 들어가는 깔끔한 우마미(Umami) 트래커 코드 반영 완료!
+UMAMI_SCRIPT = """
+<script async src="https://cloud.umami.is/script.js" data-website-id="47145cdb-622b-4a6c-bcd5-dc5d86f0567b"></script>
 """
 
 # [2] 디스커스 댓글창 설정 (확인하신 숏네임 반영 완료)
@@ -119,5 +109,5 @@ if html_file_path and os.path.exists(html_file_path):
 else:
     st.info("👋 왼쪽의 '다른 주제 보기'를 열어 아티클을 선택하거나, articles 폴더에 HTML 파일을 넣어주세요!")
 
-# 5. 구글 애널리틱스 투명 트래커 실행 (백그라운드 트래픽 집계)
-components.html(GA_SCRIPT, height=0, width=0)
+# ✅ 5. 구글 애널리틱스 대신 우마미 투명 트래커 실행 (백그라운드 트래픽 집계)
+components.html(UMAMI_SCRIPT, height=0, width=0)
