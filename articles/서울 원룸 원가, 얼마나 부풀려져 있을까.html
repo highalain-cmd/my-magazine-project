@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울 원룸 월세는 적정 임대료의 2.22배</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --black:   #0a0a08;
+  --black-2: #141210;
+  --black-3: #1e1c19;
+  --cream:   #F4F0E6;
+  --cream-2: #EAE5D8;
+  --cream-3: #DDD8CC;
+  --white:   #FDFCF8;
+  --red:     #D94030;
+  --red-s:   #f5e8e6;
+  --gray:    #6B6560;
+  --gray-l:  #C8C2B6;
+  --inter:   'Inter', sans-serif;
+  --grotesk: 'Space Grotesk', sans-serif;
+  --mono:    'IBM Plex Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #1a1a18; font-family: var(--inter); }
+
+/* ── 페이지 공통 ── */
+.page {
+  width: 794px;
+  min-height: 1123px;
+  margin: 28px auto;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.ph { /* page header */
+  padding: 28px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+.ph-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.ph-label.lt { color: rgba(255,255,255,.45); }
+.ph-pg {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gray-l);
+  letter-spacing: .1em;
+}
+.ph-pg.lt { color: rgba(255,255,255,.35); }
+.ph.bdr  { border-bottom: 1px solid rgba(0,0,0,.08); }
+.ph.bdrl { border-bottom: 1px solid rgba(255,255,255,.06); }
+
+.pf { /* page footer */
+  padding: 18px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  flex-shrink: 0;
+}
+.pf.bdr  { border-top: 1px solid rgba(0,0,0,.06); }
+.pf.bdrl { border-top: 1px solid rgba(255,255,255,.06); }
+.pf-t { font-family: var(--mono); font-size: 10px; color: var(--gray-l); letter-spacing: .06em; }
+.pf-t.lt { color: rgba(255,255,255,.15); }
+
+.body-wrap { flex: 1; padding: 44px 56px; }
+
+/* ── 타이포 공통 ── */
+h1.st {
+  font-family: var(--grotesk);
+  font-size: 42px; font-weight: 700;
+  line-height: 1.05; letter-spacing: -.03em;
+  color: var(--black); margin-bottom: 28px;
+}
+h1.st.lt { color: var(--white); }
+h2.sh {
+  font-family: var(--grotesk);
+  font-size: 21px; font-weight: 600;
+  color: var(--black); margin: 32px 0 12px;
+  letter-spacing: -.01em;
+}
+h2.sh.lt { color: var(--white); }
+h3.ssh {
+  font-family: var(--grotesk);
+  font-size: 15px; font-weight: 600;
+  color: var(--black-2); margin: 20px 0 7px;
+}
+p.bd {
+  font-size: 15.5px; line-height: 1.85;
+  color: #2e2b26; margin-bottom: 16px;
+}
+p.bd strong { font-weight: 600; color: var(--black); }
+p.bd.lt { color: rgba(255,255,255,.6); }
+p.bd.lt strong { color: var(--white); }
+
+.pullout {
+  border-left: 3px solid var(--red);
+  padding: 14px 20px;
+  background: var(--red-s);
+  margin: 22px 0;
+  border-radius: 0 3px 3px 0;
+}
+.pullout p { font-family: var(--grotesk); font-size: 15.5px; font-weight: 600; line-height: 1.55; color: var(--black); }
+.pullout.dk { background: rgba(217,64,48,.12); }
+.pullout.dk p { color: rgba(255,255,255,.85); }
+
+.ibox {
+  background: var(--cream-2); border: 1px solid var(--cream-3);
+  border-radius: 3px; padding: 16px 20px; margin: 16px 0;
+  font-size: 14px; color: #3d3a34; line-height: 1.7;
+}
+.ibox-t { font-family: var(--mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--gray); margin-bottom: 7px; }
+.ibox.dk { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); color: rgba(255,255,255,.55); }
+.ibox.dk .ibox-t { color: rgba(255,255,255,.25); }
+
+.cw { background: var(--white); border: 1px solid var(--cream-3); border-radius: 3px; padding: 18px 22px; margin: 16px 0; }
+.cw.dk { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); }
+.cw-t { font-family: var(--grotesk); font-size: 13px; font-weight: 600; color: var(--black); margin-bottom: 3px; }
+.cw-t.lt { color: var(--white); }
+.cw-s { font-family: var(--mono); font-size: 10px; color: var(--gray); margin-bottom: 14px; letter-spacing: .04em; }
+.cw-s.lt { color: rgba(255,255,255,.3); }
+
+.mc-row { display: grid; gap: 12px; margin: 16px 0; }
+.mc-row.c3 { grid-template-columns: repeat(3,1fr); }
+.mc-row.c2 { grid-template-columns: repeat(2,1fr); }
+.mc { background: var(--white); border: 1px solid var(--cream-3); border-radius: 3px; padding: 15px 17px; position: relative; }
+.mc::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; border-radius:3px 3px 0 0; }
+.mc.r::before { background: var(--red); }
+.mc.b::before { background: var(--black); }
+.mc.g::before { background: var(--gray); }
+.mc-l { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--gray); margin-bottom: 6px; }
+.mc-v { font-family: var(--grotesk); font-size: 1.85rem; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+.mc.r .mc-v { color: var(--red); }
+.mc.b .mc-v { color: var(--black); }
+.mc.g .mc-v { color: var(--gray); }
+.mc-d { font-size: 11px; color: var(--gray); line-height: 1.4; }
+
+.dt { width:100%; border-collapse:collapse; font-size:13.5px; margin:12px 0; }
+.dt th { font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--gray); padding:8px 10px; border-bottom:1px solid var(--cream-3); text-align:left; background:var(--cream-2); }
+.dt td { padding:8px 10px; border-bottom:1px solid var(--cream-2); color:#2e2b26; }
+.dt tr:last-child td { border-bottom:none; }
+.dt tr:hover td { background:var(--cream-2); }
+
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0; }
+hr.rl { border:none; border-top:1px solid var(--cream-3); margin:26px 0; }
+hr.rl.dk { border-top-color:rgba(255,255,255,.08); }
+
+.bar-i { display:inline-block; height:5px; border-radius:2px; vertical-align:middle; margin-right:6px; }
+.legend { display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--gray); margin-bottom:10px; }
+.legend-i { display:flex; align-items:center; gap:6px; }
+.legend-d { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
+
+/* ════════════════════════════════
+   P1 — 표지
+════════════════════════════════ */
+.cover { background: var(--red); }
+
+.cv-top {
+  padding: 30px 56px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.cv-logo { font-family: var(--grotesk); font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.4); }
+.cv-date { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; color: rgba(255,255,255,.3); }
+
+.cv-body {
+  flex: 1; padding: 0 56px 52px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+
+.cv-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; color: rgba(255,255,255,.45); text-transform: uppercase; margin-bottom: 24px; }
+
+/* 적정 임대료 대비 레이블 */
+.cv-what-wrap { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.cv-what {
+  font-family: var(--grotesk); font-size: 18px; font-weight: 700;
+  color: #FDFCF8; letter-spacing: -.01em;
+  background: rgba(0,0,0,.55); padding: 6px 16px; border-radius: 2px;
+  display: inline-block; border: 1px solid rgba(255,255,255,.25);
+}
+
+.cv-title {
+  font-family: var(--grotesk);
+  font-size: 96px; font-weight: 700;
+  line-height: .92; letter-spacing: -.04em;
+  color: var(--white); margin-bottom: 44px;
+}
+.cv-title .accent { color: var(--black); display: block; }
+
+.cv-rule { width:100%; height:1px; background:rgba(255,255,255,.2); margin-bottom:26px; }
+
+.cv-bottom { display:flex; justify-content:space-between; align-items:flex-end; }
+.cv-bridge {
+  font-size: 15px; line-height: 1.7; color: rgba(255,255,255,.6);
+  max-width: 460px; font-weight: 400;
+}
+.cv-bridge em { font-style: normal; color: rgba(255,255,255,.9); font-weight: 500; }
+.cv-no { font-family: var(--grotesk); font-size: 80px; font-weight: 700; color: rgba(0,0,0,.12); line-height: 1; letter-spacing: -.05em; }
+
+/* ════════════════════════════════
+   P2 — 목차
+════════════════════════════════ */
+.toc-page { background: #1e1c19; }
+
+.toc-top { padding:30px 56px; border-bottom:1px solid rgba(255,255,255,.06); display:flex; justify-content:space-between; align-items:center; }
+.toc-brand { font-family:var(--grotesk); font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.5); }
+.toc-badge { font-family:var(--mono); font-size:10px; letter-spacing:.16em; color:var(--red); border:1px solid rgba(217,64,48,.35); padding:5px 12px; text-transform:uppercase; }
+
+.toc-body { flex:1; padding:44px 56px 28px; }
+.toc-lead { font-family:var(--grotesk); font-size:14px; font-weight:400; color:rgba(255,255,255,.35); line-height:1.6; margin-bottom:36px; max-width:520px; }
+.toc-lead em { font-style:normal; color:rgba(255,255,255,.6); }
+
+.toc-list { display:flex; flex-direction:column; }
+.toc-item {
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:16px 0;
+  display:grid;
+  grid-template-columns:48px 1fr 36px;
+  gap:0 16px;
+  align-items:start;
+}
+.toc-item:last-child { border-bottom:1px solid rgba(255,255,255,.07); }
+.toc-no { font-family:var(--mono); font-size:13px; color:rgba(255,255,255,.7); letter-spacing:.1em; padding-top:2px; }
+.toc-item.ft .toc-no { color:rgba(255,107,85,.95); }
+.toc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.65); margin-bottom:4px; }
+.toc-ttl { font-family:var(--grotesk); font-size:19px; font-weight:600; color:#FDFCF8; line-height:1.2; margin-bottom:5px; }
+.toc-item.ft .toc-ttl { color:#ff8570; font-size:20px; }
+.toc-dsc { font-size:13px; color:rgba(255,255,255,.55); line-height:1.5; }
+.toc-pg { font-family:var(--mono); font-size:13px; color:rgba(255,255,255,.7); text-align:right; padding-top:2px; }
+
+.toc-foot { padding:18px 56px; border-top:1px solid rgba(255,255,255,.05); display:flex; justify-content:space-between; }
+.toc-ft { font-family:var(--mono); font-size:10px; color:rgba(255,255,255,.4); letter-spacing:.06em; }
+
+/* ════════════════════════════════
+   P3 — 들어가며
+════════════════════════════════ */
+.intro-page { background: var(--cream); }
+
+.intro-split { flex:1; display:grid; grid-template-columns:300px 1fr; }
+
+.intro-l {
+  background: #1e1c19; padding:48px 40px;
+  display:flex; flex-direction:column;
+}
+.intro-l-no { font-family:var(--mono); font-size:10px; letter-spacing:.18em; color:rgba(255,255,255,.18); margin-bottom:44px; text-transform:uppercase; }
+.intro-l-t { font-family:var(--grotesk); font-size:44px; font-weight:700; line-height:1.0; letter-spacing:-.03em; color:var(--white); flex:1; }
+.intro-l-t .red { color:var(--red); }
+.intro-l-q { border-top:1px solid rgba(255,255,255,.08); padding-top:18px; font-size:13px; line-height:1.65; color:rgba(255,255,255,.36); font-style:italic; }
+
+.intro-r { padding:48px 44px; display:flex; flex-direction:column; gap:0; }
+
+/* 재조달 원가 설명 박스 */
+.concept-box {
+  background: #2a2824; border-radius:3px; padding:20px 22px; margin:20px 0;
+}
+.concept-box-title { font-family:var(--grotesk); font-size:13px; font-weight:700; color:var(--red); margin-bottom:12px; letter-spacing:-.01em; }
+.concept-item { display:flex; gap:12px; margin-bottom:12px; align-items:flex-start; }
+.concept-item:last-child { margin-bottom:0; }
+.concept-no { font-family:var(--mono); font-size:10px; color:var(--red); min-width:20px; padding-top:3px; }
+.concept-text { font-size:13.5px; line-height:1.7; color:rgba(255,255,255,.65); }
+.concept-text strong { color:var(--white); font-weight:600; }
+
+/* ════════════════════════════════
+   P4 — 분석 대상
+════════════════════════════════ */
+.analysis-page { background: var(--cream); }
+
+/* ════════════════════════════════
+   P5 — 2.22배
+════════════════════════════════ */
+.result-page { background: #232018; }
+
+.res-hero { padding:48px 56px 36px; border-bottom:1px solid rgba(255,255,255,.06); }
+.res-eyebrow { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--red); margin-bottom:18px; }
+.res-big { font-family:var(--grotesk); font-size:152px; font-weight:700; line-height:.85; letter-spacing:-.05em; color:var(--white); }
+.res-big-sub { font-family:var(--grotesk); font-size:22px; font-weight:500; color:rgba(255,255,255,.28); margin-top:10px; letter-spacing:-.01em; }
+
+.res-body { flex:1; padding:32px 56px 0; display:flex; flex-direction:column; background:#232018; }
+
+.rsg { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.1); border-radius:3px; overflow:hidden; margin:22px 0; }
+.rsg-i { background:#2a2824; padding:17px 20px; border:1px solid rgba(255,255,255,0.08); }
+.rsg-i.ac { background:var(--red); }
+.rsg-l { font-family:var(--mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:6px; }
+.rsg-i.ac .rsg-l { color:rgba(255,255,255,.5); }
+.rsg-v { font-family:var(--grotesk); font-size:1.85rem; font-weight:700; color:var(--white); line-height:1; margin-bottom:4px; }
+.rsg-d { font-size:11px; color:rgba(255,255,255,.45); line-height:1.4; }
+.rsg-i.ac .rsg-d { color:rgba(255,255,255,.5); }
+
+/* ════════════════════════════════
+   P6 — 2×2 매트릭스
+════════════════════════════════ */
+.matrix-page { background: var(--cream); }
+
+/* 매트릭스 그리드 */
+.matrix-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:8px;
+  margin:16px 0;
+  height:320px;
+}
+.matrix-cell {
+  border-radius:3px; padding:18px 20px;
+  display:flex; flex-direction:column; justify-content:space-between;
+  position:relative; overflow:hidden;
+}
+.mc-quadrant { font-family:var(--mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; margin-bottom:6px; }
+.mc-q-title { font-family:var(--grotesk); font-size:17px; font-weight:700; line-height:1.2; margin-bottom:6px; }
+.mc-q-desc { font-size:12px; line-height:1.5; }
+.mc-q-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; }
+.mc-q-tag { font-family:var(--mono); font-size:9.5px; padding:3px 8px; border-radius:2px; }
+
+/* A: 합리적 고가 */
+.mca { background:var(--black-2); }
+.mca .mc-quadrant { color:rgba(255,255,255,.3); }
+.mca .mc-q-title { color:var(--white); }
+.mca .mc-q-desc { color:rgba(255,255,255,.45); }
+.mca .mc-q-tag { background:rgba(255,255,255,.07); color:rgba(255,255,255,.5); }
+
+/* B: 거품 고가 */
+.mcb { background:var(--red); }
+.mcb .mc-quadrant { color:rgba(255,255,255,.5); }
+.mcb .mc-q-title { color:var(--white); }
+.mcb .mc-q-desc { color:rgba(255,255,255,.7); }
+.mcb .mc-q-tag { background:rgba(0,0,0,.15); color:rgba(255,255,255,.7); }
+
+/* C: 합리적 서민 */
+.mcc { background:var(--cream-2); border:1px solid var(--cream-3); }
+.mcc .mc-quadrant { color:var(--gray); }
+.mcc .mc-q-title { color:var(--black); }
+.mcc .mc-q-desc { color:var(--gray); }
+.mcc .mc-q-tag { background:var(--cream-3); color:var(--gray); }
+
+/* D: 숨은 부담 */
+.mcd { background:var(--black); border:2px solid var(--red); }
+.mcd .mc-quadrant { color:rgba(217,64,48,.7); }
+.mcd .mc-q-title { color:var(--white); }
+.mcd .mc-q-desc { color:rgba(255,255,255,.55); }
+.mcd .mc-q-tag { background:rgba(217,64,48,.15); color:rgba(217,64,48,.8); }
+
+/* 축 레이블 */
+.matrix-axis-x {
+  display:flex; justify-content:space-between;
+  font-family:var(--mono); font-size:9px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--gray); margin-top:4px;
+}
+.matrix-axis-y-wrap {
+  position:relative; width:16px;
+}
+
+/* ════════════════════════════════
+   P7 — 매트릭스 상세
+════════════════════════════════ */
+
+/* ════════════════════════════════
+   P8 — 유형·연도별
+════════════════════════════════ */
+
+/* ════════════════════════════════
+   P9 — 해석
+════════════════════════════════ */
+
+/* ════════════════════════════════
+   P10 — 결론
+════════════════════════════════ */
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════ P1: 표지 ══════════════════════════ -->
+<div class="page cover">
+  <div class="cv-top">
+    <div class="cv-logo">Data Journalism Portfolio</div>
+    <div class="cv-date">서울 주거 분석 · 2026.05</div>
+  </div>
+
+  <div class="cv-body">
+    <div class="cv-eyebrow">서울 원룸 임대료 원가 역산 연구</div>
+
+    <div class="cv-what-wrap">
+      <div class="cv-what">적정 임대료 대비</div>
+    </div>
+
+    <div class="cv-title">
+      서울<br>
+      원룸<br>
+      월세는<br>
+      <span class="accent">2.22배</span>
+    </div>
+
+    <div class="cv-rule"></div>
+
+    <div class="cv-bottom">
+      <div class="cv-bridge">
+        원룸을 구하다 든 의문 하나에서 시작한 독립 데이터 분석 프로젝트.<br>
+        <em>"이 방, 원래는 얼마인 건데?"</em><br>
+        이 월세가 적정한지 알 수 있는 방법이 없어,<br>
+        직접 계산해보기로 했다.
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P2: 목차 ══════════════════════════ -->
+<div class="page toc-page">
+  <div class="toc-top">
+    <div class="toc-brand">원룸 원가 역산 연구 · 2026</div>
+    <div class="toc-badge">Index</div>
+  </div>
+
+  <div class="toc-body">
+
+
+    <div class="toc-list">
+      <div class="toc-item">
+        <div class="toc-no">00</div>
+        <div>
+          <div class="toc-sec">들어가며</div>
+          <div class="toc-ttl">왜 이 질문을 했는가</div>
+          
+        </div>
+        <div class="toc-pg">03</div>
+      </div>
+
+      <div class="toc-item">
+        <div class="toc-no">01</div>
+        <div>
+          <div class="toc-sec">분석 대상</div>
+          <div class="toc-ttl">82,957건의 실거래 데이터로 보는 서울 원룸 시장</div>
+          
+        </div>
+        <div class="toc-pg">04</div>
+      </div>
+
+      <div class="toc-item ft">
+        <div class="toc-no">02</div>
+        <div>
+          <div class="toc-sec">핵심 결과</div>
+          <div class="toc-ttl">2.22배 — 건물 원가 기준 적정 임대료 대비 실제 월세 수준</div>
+          
+        </div>
+        <div class="toc-pg">05</div>
+      </div>
+
+      <div class="toc-item ft">
+        <div class="toc-no">03</div>
+        <div>
+          <div class="toc-sec">지역별 분석</div>
+          <div class="toc-ttl">우리 동네는 어느 사분면에 있을까?</div>
+          
+        </div>
+        <div class="toc-pg">06</div>
+      </div>
+
+      <div class="toc-item">
+        <div class="toc-no">04</div>
+        <div>
+          <div class="toc-sec">유형·연도별 분석</div>
+          <div class="toc-ttl">단독다가구 3.05배, 격차의 구조적 원인</div>
+          
+        </div>
+        <div class="toc-pg">07</div>
+      </div>
+
+      <div class="toc-item">
+        <div class="toc-no">05</div>
+        <div>
+          <div class="toc-sec">해석</div>
+          <div class="toc-ttl">원가와 월세는 왜 연동되지 않는가</div>
+          
+        </div>
+        <div class="toc-pg">08</div>
+      </div>
+
+      <div class="toc-item">
+        <div class="toc-no">06</div>
+        <div>
+          <div class="toc-sec">결론</div>
+          <div class="toc-ttl">계약서에 도장 찍기 전 &#8216;알 권리&#8217;가 있다</div>
+          
+        </div>
+        <div class="toc-pg">09</div>
+      </div>
+
+      <div class="toc-item">
+        <div class="toc-no">—</div>
+        <div>
+          <div class="toc-sec">부록</div>
+          <div class="toc-ttl">방법론 및 데이터 근거</div>
+          
+        </div>
+        <div class="toc-pg">10</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toc-foot">
+    <div class="toc-ft">원천 데이터 모델링을 통한 샘플 콘텐츠</div>
+    <div class="toc-ft">BigQuery · Python · Looker Studio</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P3: 들어가며 ══════════════════════════ -->
+<div class="page intro-page">
+  <div class="ph bdr">
+    <div class="ph-label">들어가며 · 00</div>
+    <div class="ph-pg">03</div>
+  </div>
+
+  <div class="intro-split">
+    <div class="intro-l">
+      <div class="intro-l-no">00 — 들어가며</div>
+      <div class="intro-l-t">
+        왜<br>이 질문을<br>
+        <span class="red">했는가</span>
+      </div>
+      <div class="intro-l-q">
+        "이 월세가 이 건물의 원가에 비춰 적정한 건지,
+        계약서에 도장 찍기 전에 알 방법이 없었다."
+      </div>
+    </div>
+
+    <div class="intro-r" style="padding:48px 44px; display:flex; flex-direction:column; gap:0;">
+      <p class="bd" style="margin-top:4px;">
+        서울에서 원룸을 구해본 사람이라면 안다. 공인중개사는 "이 동네는 원래 이 정도"라고 하고, 나는 예산 안에서 조건에 맞는 곳을 찾다가 결국 계약서에 도장을 찍는다.
+      </p>
+
+      <p class="bd">
+        그런데 문득 이런 생각이 들었다. <strong>이 월세, 이 건물을 짓는 데 실제로 얼마가 들었는지에 비춰보면 적정한 걸까?</strong> 가르쳐주지 않길래 직접 계산해보기로 했다.
+      </p>
+
+      <hr class="rl">
+
+      <h2 class="sh" style="margin-top:0;">원가를 어떻게 계산했나</h2>
+
+      <div class="concept-box">
+        <div class="concept-box-title">이 연구의 원가 계산 3단계</div>
+
+        <div class="concept-item">
+          <div class="concept-no">①</div>
+          <div class="concept-text">
+            <strong>토지 원가</strong> — 국가가 매년 고시하는 공시지가에 대지면적을 곱했다. 건물이 올라선 땅이 얼마짜리인지를 뜻한다.
+          </div>
+        </div>
+
+        <div class="concept-item">
+          <div class="concept-no">②</div>
+          <div class="concept-text">
+            <strong>건축 원가</strong> — 한국부동산원이 매년 발표하는 건물신축단가표(㎡당 공사비)에 건물 연면적을 곱했다. 단, 오래된 건물일수록 그 당시 공사비 기록이 남아있지 않다. 이를 보완하기 위해 <strong>건설공사비지수(CCCI)</strong>와 <strong>생산자물가지수(PPI)</strong>를 활용했다. CCCI는 한국은행이 매달 집계하는 건설 물가 지수로, 쉽게 말해 "건설비가 예전에 비해 얼마나 올랐는가"를 측정한다. PPI는 그보다 오래된 시기를 커버한다. 두 지수로 과거 건축 원가를 현재 물가 기준으로 환산했다.
+          </div>
+        </div>
+
+        <div class="concept-item">
+          <div class="concept-no">③</div>
+          <div class="concept-text">
+            <strong>호실 배분</strong> — 건물 전체 원가를 내 호실의 전용면적이 연면적에서 차지하는 비율로 나눴다. 전체 건물 원가 중 내 방 몫만 떼어낸 것이다.
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="ibox">
+          <div class="ibox-t">✓ 이 연구가 보여주는 것</div>
+          서울 원룸 월세와 물리적 재조달 원가 사이의 갭. 주택 유형별·지역별·건축연도별 갭의 차이 추적.
+        </div>
+        <div class="ibox">
+          <div class="ibox-t">✗ 이 연구가 주장하지 않는 것</div>
+          임대료 규제 주장이나 임대인 비판이 아님. 원가와 월세 사이 정보 비대칭의 크기를 측정하는 것이 목적.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pf bdr">
+    <div class="pf-t">서울 원룸 임대료 원가 역산 연구 · 2026</div>
+    <div class="pf-t">원천 데이터 모델링을 통한 샘플 콘텐츠</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P4: 분석 대상 ══════════════════════════ -->
+<div class="page analysis-page">
+  <div class="ph bdr">
+    <div class="ph-label">분석 대상 · 01</div>
+    <div class="ph-pg">04</div>
+  </div>
+
+  <div class="body-wrap">
+    <h1 class="st">82,957건의 실거래 데이터로 본<br>서울 원룸 시장</h1>
+
+    <p class="bd">
+      분석 대상은 2025년 4월부터 2026년 4월까지 최근 1년간 서울에서 체결된 다세대·단독다가구·연립주택의 월세 임대차 계약 건이다. 국토부 실거래가 공개 시스템에서 수집한 원시 데이터 285,784건을 복수의 품질 기준으로 필터링한 결과, 최종 유효 건수는 <strong>82,957건</strong>이었다. 전체 계약 건의 29.0%에 해당한다.
+    </p>
+
+    <div class="mc-row c3">
+      <div class="mc r">
+        <div class="mc-l">최종 분석 건수</div>
+        <div class="mc-v">82,957</div>
+        <div class="mc-d">건 · 서울 25개구 전체</div>
+      </div>
+      <div class="mc b">
+        <div class="mc-l">건축연도 범위</div>
+        <div class="mc-v">54년</div>
+        <div class="mc-d">1971~2025년 스펙트럼</div>
+      </div>
+      <div class="mc g">
+        <div class="mc-l">계약 체결 시점</div>
+        <div class="mc-v">최근 1년</div>
+        <div class="mc-d">2025.04 ~ 2026.04</div>
+      </div>
+    </div>
+
+    <h2 class="sh">주택유형별 구성 — 왜 이 비율인가</h2>
+
+    <div class="cw">
+      <div class="cw-t">주택유형별 분포</div>
+      <div class="cw-s">다세대 54,481건(65.7%) · 단독다가구 26,499건(31.9%) · 연립 1,977건(2.4%)</div>
+      <div style="height:150px; position:relative;"><canvas id="typeDistChart"></canvas></div>
+    </div>
+
+    <p class="bd">
+      전체 표본 중 다세대주택 계약이 54,481건(65.7%)으로 가장 많은 비중을 차지했다. 단독다가구는 26,499건(31.9%), 연립은 1,977건(2.4%)이었다. 다세대주택이 이렇게 많은 이유는 건축법 구조에 있다. 다세대는 연면적 660㎡(약 200평) 이하의 4층 이하 공동주택으로, 소규모 필지에 지을 수 있어 서울 골목마다 가장 광범위하게 분포한다. 단독다가구(31.9%)는 단독주택 형태이지만 여러 세대가 거주하는 유형으로, 골목 안쪽 주거지에 많다. 연립(2.4%)은 연면적 660㎡ 초과 건물로 규모가 크고 수가 적다. 오피스텔은 수백 세대 규모 복합건물이 많아 호실당 원가 배분의 신뢰성이 낮아 제외했다.
+    </p>
+
+    <h2 class="sh">주요 필터링 기준</h2>
+
+    <div class="ibox">
+      <div class="ibox-t">285,784건 → 82,957건 — 어떻게 걸러냈나</div>
+      <ul style="padding-left:1.2rem; line-height:2.1; font-size:14px; color:#3d3a34;">
+        <li>공시지가·대지면적 정보 보유 (토지 원가 산출)</li>
+        <li>건물신축단가와 결합 + CCCI/PPI 보정 적용 (건축 원가 산출)</li>
+        <li>전용면적 10㎡(약 3평) 이상 + 전용면적 ≤ 연면적 (데이터 오류 제거)</li>
+        <li>월세 10만원 이상 (오기입 및 반전세 제거)</li>
+        <li>원가 회수 기간 100년 이내 (건물 내용연수 기준)</li>
+        <li>연면적 상한: 다세대·단독다가구 1,000㎡(약 303평) / 연립 3,000㎡(약 908평)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pf bdr">
+    <div class="pf-t">서울 원룸 임대료 원가 역산 연구 · 2026</div>
+    <div class="pf-t">원천 데이터 모델링을 통한 샘플 콘텐츠</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P5: 2.22배 ══════════════════════════ -->
+<div class="page result-page">
+  <div class="ph bdrl">
+    <div class="ph-label lt">핵심 결과 · 02</div>
+    <div class="ph-pg lt">05</div>
+  </div>
+
+  <div class="res-hero">
+    <div class="res-eyebrow">원가 기준 부풀림 배율 — 서울 원룸 전체 평균</div>
+    <div class="res-big">2.22<span style="font-size:72px; font-weight:600; color:rgba(255,255,255,0.7); letter-spacing:-.02em;">배</span></div>
+    <div class="res-big-sub" style="color:rgba(255,255,255,0.65); font-size:20px; font-weight:500; background:rgba(217,64,48,0.2); display:inline-block; padding:6px 16px; border-radius:2px; margin-top:12px; letter-spacing:-.01em;">적정 임대료 대비 실제 월세 수준</div>
+  </div>
+
+  <div class="res-body">
+    <p class="bd lt" style="margin-top:4px;">
+      이 연구에서 &#8216;적정 임대료&#8217;는 건물의 재조달 원가에 <strong>간주임대료율 3.5%</strong>를 적용해 산출했다. 간주임대료율은 국세청이 매년 고시하는 세법상 자본의 기회비용 지표다. 쉽게 말하면, <strong>"집주인이 그 돈을 정기예금에 넣어뒀을 때 받을 수 있는 이자율"</strong>과 비슷한 개념이다. 이 연구는 재조달 원가에 그 비율을 적용했을 때 나오는 연간 수익을 12개월로 나눈 값을 &#8216;적정 임대료&#8217;로 정의했다. 건물 투자금 대비 '무위험 수준'의 수익만 내도록 설계했을 때의 월 임대료라고 이해하면 된다.
+    </p>
+
+    <p class="bd lt">
+      다시 말해, 이 건물을 짓는 데 든 돈(재조달 원가)을 기준으로 3.5% 이자만큼만 월세로 받는다고 계산하면, 서울 원룸의 평균 적정 임대료는 월 39.8만원이 나온다. 실제 평균 월세는 <strong>60.6만원</strong>. 차이는 매달 <strong>20.8만원</strong>이다. 82,957건 합산 기준 연간 약 <strong>2,074억원</strong> 규모의 초과 부담이다.
+    </p>
+
+    <div class="rsg">
+      <div class="rsg-i">
+        <div class="rsg-l">적정 임대료</div>
+        <div class="rsg-v" style="color:rgba(255,255,255,.85);">39.8<span style="font-size:1rem;font-weight:400; color:rgba(255,255,255,.5);">만원</span></div>
+        <div class="rsg-d">재조달 원가 × 3.5% ÷ 12</div>
+      </div>
+      <div class="rsg-i" style="background:#343028;">
+        <div class="rsg-l">실제 월세</div>
+        <div class="rsg-v">60.6<span style="font-size:1rem;font-weight:400;">만원</span></div>
+        <div class="rsg-d">실거래 평균</div>
+      </div>
+      <div class="rsg-i ac">
+        <div class="rsg-l">월 초과 부담</div>
+        <div class="rsg-v">20.8<span style="font-size:1rem;font-weight:400;">만원</span></div>
+        <div class="rsg-d">연간 2,074억원 규모</div>
+      </div>
+    </div>
+
+    <h2 class="sh lt" style="font-size:18px; margin-top:16px;">여기서 잠깐: 연구에서 말하는 &#8216;원가&#8217;란?</h2>
+
+    <p class="bd lt" style="font-size:14.5px;">
+      이 연구의 원가는 건물을 지을 당시 실제 투입 원가가 아닌, <strong>현재 시점 재조달 원가</strong>다. "지금 이 건물을 다시 짓는다면 얼마가 드는가"를 기준으로 삼았다. 이 연구는 물리적 원가(토지+건축비)만을 기준으로 삼은 객관적 비교선이다. 금융비용·설계비 등 공급자 측면의 추가 비용은 포함하지 않았으며, 이를 포함하면 갭은 줄어들 수 있다.
+    </p>
+  </div>
+
+  <div class="pf bdrl">
+    <div class="pf-t lt">서울 원룸 임대료 원가 역산 연구 · 2026</div>
+    <div class="pf-t lt">원천 데이터 모델링을 통한 샘플 콘텐츠</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P6: 사분면 통합 ══════════════════════════ -->
+<div class="page" style="background:var(--cream);">
+  <div class="ph bdr">
+    <div class="ph-label">지역별 분석 · 03</div>
+    <div class="ph-pg">06</div>
+  </div>
+  <div class="body-wrap" style="padding-top:32px;">
+    <h1 class="st">우리 동네는<br>어느 사분면에 있을까?</h1>
+    <p class="bd">
+      월세 수준과 원가 대비 갭(부풀림 배율)을 두 축으로 서울 25개구를 4개 유형으로 분류했다. 기준점은 서울 전체 평균 월세(60.6만원)와 평균 부풀림 배율(2.22배)이다.
+    </p>
+
+    <div class="cw" style="margin-bottom:14px;">
+      <div class="cw-t">서울 25개구 — 월세 vs 부풀림 배율</div>
+      <div class="cw-s">가로축: 평균 월세(만원) · 세로축: 부풀림 배율 · 점선: 서울 평균</div>
+      <div style="height:210px; position:relative;"><canvas id="matrixScatter"></canvas></div>
+      <div style="display:flex; gap:14px; margin-top:8px; flex-wrap:wrap;">
+        <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray);font-family:var(--mono);"><span style="width:9px;height:9px;border-radius:50%;background:#1e1c19;display:inline-block;"></span>A 합리적 고가</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray);font-family:var(--mono);"><span style="width:9px;height:9px;border-radius:50%;background:#D94030;display:inline-block;"></span>B 거품 고가</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray);font-family:var(--mono);"><span style="width:9px;height:9px;border-radius:50%;background:#9a9288;display:inline-block;"></span>C 합리적 서민</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray);font-family:var(--mono);"><span style="width:9px;height:9px;border-radius:50%;background:#8B3A3A;display:inline-block;"></span>D 높은 갭</span>
+      </div>
+    </div>
+
+    <!-- A사분면 -->
+    <h2 class="sh" style="font-size:16px; margin-top:14px;">A — 합리적 고가: 강남·서초·용산·마포·중구</h2>
+    <p class="bd" style="font-size:13px; margin-bottom:6px;">공시지가가 높아 재조달 원가 자체가 높게 산출된다. 비싸지만 원가가 근거를 뒷받침하는 구조다. 부풀림 배율(1.67~2.16배)이 상대적으로 좁다.</p>
+    <table class="dt" style="font-size:11.5px; margin-bottom:8px;">
+      <thead><tr><th>구</th><th>주요 유형</th><th>평균 월세</th><th>호실당 원가</th><th>부풀림</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600;">강남구</td><td>다세대 94.3%</td><td>91.0만원</td><td>2억 297만원</td><td>1.81배</td></tr>
+        <tr><td style="font-weight:600;">서초구</td><td>다세대 73.3%</td><td>82.5만원</td><td>2억 913만원</td><td>1.56배</td></tr>
+        <tr><td style="font-weight:600;">용산구</td><td>단독다가구 48.5%·다세대 45.6%</td><td>99.0만원</td><td>다세대 1억 9,591만</td><td>2.16배</td></tr>
+        <tr><td style="font-weight:600;">마포구</td><td>다세대 59.7%·단독다가구 38.8%</td><td>65.5만원</td><td>1억 5,043~1억 9,564만</td><td>1.67배</td></tr>
+      </tbody>
+    </table>
+
+    <!-- B사분면 -->
+    <h2 class="sh" style="font-size:16px; margin-top:10px;">B — 거품 고가: 종로·서대문</h2>
+    <p class="bd" style="font-size:13px; margin-bottom:6px;">평균 월세가 서울 평균을 넘지만 부풀림 배율도 높다. 두 구 모두 단독다가구 구축 비중이 높아 원가는 낮게 산출되는 반면, 대학가·도심 입지 프리미엄으로 월세가 높게 유지된다.</p>
+    <table class="dt" style="font-size:11.5px; margin-bottom:8px;">
+      <thead><tr><th>구</th><th>유형</th><th>비중</th><th>건축연도</th><th>호실당 원가</th><th>월세</th><th>부풀림</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="2" style="font-weight:700;">종로구<br><span style="font-size:10px;color:var(--gray);">전체 2.31배</span></td><td>단독다가구</td><td>53.1%</td><td>2004년</td><td>1억 2,746만</td><td>67.0만</td><td style="color:var(--red);font-weight:600;">2.40배</td></tr>
+        <tr><td>다세대</td><td>41.7%</td><td>2007년</td><td>1억 5,373만</td><td>69.0만</td><td style="color:var(--red);">2.24배</td></tr>
+        <tr style="border-top:1px solid var(--cream-3);"><td rowspan="2" style="font-weight:700;">서대문구<br><span style="font-size:10px;color:var(--gray);">전체 2.95배</span></td><td>단독다가구</td><td>55.2%</td><td>1996년</td><td>1억 1,659만</td><td>59.7만</td><td style="color:var(--red);font-weight:700;">3.43배</td></tr>
+        <tr><td>다세대</td><td>42.9%</td><td>2009년</td><td>1억 1,166만</td><td>59.8만</td><td style="color:var(--red);">2.40배</td></tr>
+      </tbody>
+    </table>
+
+    <!-- C사분면 -->
+    <h2 class="sh" style="font-size:16px; margin-top:10px;">C — 합리적 서민: 16개구 (송파·강서·관악·강동·영등포 등)</h2>
+    <p class="bd" style="font-size:13px; margin-bottom:6px;">월세도 낮고 갭도 낮아 상대적으로 가장 합리적인 시장이다. 다세대 신축 비중이 높은 구들이 주로 여기 속한다.</p>
+    <table class="dt" style="font-size:11.5px; margin-bottom:8px;">
+      <thead><tr><th>구</th><th>주요 유형</th><th>평균 월세</th><th>부풀림</th><th>특징</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600;">송파구</td><td>다세대 96.8%</td><td>60.0만원</td><td>1.51배</td><td>다세대 신축 집중</td></tr>
+        <tr><td style="font-weight:600;">영등포구</td><td>다세대 65.9%</td><td>51.5만원</td><td>1.41배</td><td>서울 최저 부풀림</td></tr>
+        <tr><td style="font-weight:600;">강서구</td><td>다세대 95.6%</td><td>55.0만원</td><td>1.75배</td><td>다세대 신축 비중 높음</td></tr>
+        <tr><td style="font-weight:600;">관악구</td><td>다세대 95.4%</td><td>54.3만원</td><td>1.85배</td><td>다세대 중심 안정적</td></tr>
+      </tbody>
+    </table>
+
+    <!-- D사분면 -->
+    <h2 class="sh" style="font-size:16px; margin-top:10px;">D — 높은 갭: 광진·성북·중랑·동대문·성동</h2>
+    <p class="bd" style="font-size:13px; margin-bottom:6px;">이 사분면의 특징은 &#8216;저렴한 동네&#8217;가 아니다. 광진·성동은 건대입구·성수 일대로 월세가 서울 평균 수준이다. 5개구의 공통점은 <strong>1990년대 건축된 단독다가구 비중이 높다</strong>는 것이다. 재조달 원가가 낮게 산출되는데 월세는 각 동네 시세를 그대로 따라가니 갭이 크게 벌어진다.</p>
+    <table class="dt" style="font-size:11.5px;">
+      <thead><tr><th>구·유형</th><th>비중</th><th>건축연도</th><th>호실당 원가</th><th>월세</th><th>적정임대료</th><th>부풀림</th></tr></thead>
+      <tbody>
+        <tr style="background:#fff8f8;"><td style="font-weight:600;">광진 단독다가구</td><td>47.6%</td><td>1996년</td><td style="color:var(--red);font-weight:600;">4,243만원</td><td>57.0만</td><td>12.4만</td><td style="color:var(--red);font-weight:700;">7.37배</td></tr>
+        <tr><td>광진 다세대</td><td>51.2%</td><td>2013년</td><td>1억 2,503만원</td><td>57.1만</td><td>36.5만</td><td>1.95배</td></tr>
+        <tr style="border-top:1px solid var(--cream-3); background:#fff8f8;"><td style="font-weight:600;">성동 단독다가구</td><td>44.5%</td><td>1992년</td><td style="color:var(--red);font-weight:600;">9,304만원</td><td>57.4만</td><td>27.1만</td><td style="color:var(--red);font-weight:600;">2.57배</td></tr>
+        <tr><td>성동 다세대</td><td>54.4%</td><td>2010년</td><td>1억 3,104만원</td><td>60.5만</td><td>38.2만</td><td>2.03배</td></tr>
+      </tbody>
+    </table>
+    <p class="bd" style="font-size:12px;color:var(--gray);margin-top:6px;">광진구: 다세대(신축 2013년) 1.95배 vs 단독다가구(구축 1996년) 7.37배 — 한 구 안에 두 시장이 공존한다.</p>
+  </div>
+  <div class="pf bdr">
+    <div class="pf-t">서울 원룸 임대료 원가 역산 연구 · 2026</div>
+    <div class="pf-t">원천 데이터 모델링을 통한 샘플 콘텐츠</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P7: 원가 회수 기간 + 영등포의 역설 ══════════════════════════ -->
+<div class="page" style="background:var(--cream);">
+  <div class="ph bdr">
+    <div class="ph-label">지역별 분석 · 03</div>
+    <div class="ph-pg">07</div>
+  </div>
+  <div class="body-wrap" style="padding-top:36px;">
+    <h1 class="st" style="font-size:34px;">원가 회수 기간과<br>영등포의 역설</h1>
+    <p class="bd">
+      원가 회수 기간이란 현재 월세 수준을 유지했을 때 재조달 원가 전액을 회수하는 데 걸리는 시간이다. 서울 25개구의 격차는 최대 2.4배에 달했다.
+    </p>
+    <div class="cw">
+      <div class="cw-t">구별 원가 회수 기간 (평균, 년) — 전체 25개구</div>
+      <div class="cw-s">빨간색 = 상위 5개구 / 회색 = 하위 5개구</div>
+      <div style="height:240px; position:relative;"><canvas id="guBarChart"></canvas></div>
+    </div>
+    <p class="bd" style="font-size:14.5px;">
+      회수 기간 상위 5개구는 영등포(38.0년)·도봉(30.7년)·송파(30.6년)·중구(30.2년)·양천(30.1년)이다. 주목할 점은 이 회수 기간 순위가 부풀림 배율 순위와 전혀 다르다는 것이다.
+    </p>
+    <h2 class="sh" style="font-size:18px;">영등포의 역설</h2>
+    <p class="bd" style="font-size:14.5px;">
+      영등포구는 원가 회수 기간 1위(38.0년)이지만 부풀림 배율은 1.41배로 서울 최저다. 영등포동·문래동·당산동 일대는 여의도 인접 입지로 공시지가가 높게 형성돼 재조달 원가가 크게 산출된다. 단독다가구 평균 호실당 원가는 3억 6,293만원이고 적정 임대료는 월 105.9만원이지만, 실제 월세는 52.6만원이다. 회수 기간은 가장 길지만 부풀림은 가장 낮은 역설적인 구조다.
+    </p>
+    <div class="mc-row c2">
+      <div class="mc r">
+        <div class="mc-l">영등포 회수 기간</div>
+        <div class="mc-v">38.0년</div>
+        <div class="mc-d">서울 1위</div>
+      </div>
+      <div class="mc g">
+        <div class="mc-l">영등포 부풀림 배율</div>
+        <div class="mc-v">1.41배</div>
+        <div class="mc-d">서울 최저</div>
+      </div>
+    </div>
+  </div>
+  <div class="pf bdr">
+    <div class="pf-t">서울 원룸 임대료 원가 역산 연구 · 2026</div>
+    <div class="pf-t">원천 데이터 모델링을 통한 샘플 콘텐츠</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P8: 유형·연도별 ══════════════════════════ -->
+<div class="page analysis-page">
+  <div class="ph bdr">
+    <div class="ph-label">유형·연도별 분석 · 04</div>
+    <div class="ph-pg">08</div>
+  </div>
+
+  <div class="body-wrap">
+    <h1 class="st">단독다가구 3.05배,<br>격차의 구조적 원인</h1>
+
+    <p class="bd">
+      주택유형별 부풀림 배율은 ▲단독다가구 3.05배 ▲다세대 1.83배 ▲연립 1.59배로 뚜렷하게 갈렸다. 단독다가구의 배율이 가장 높은 이유는 앞선 분석에서 살펴봤듯, 1990년대 건축된 구축 비중이 높아 재조달 원가가 낮게 산출되는 반면 월세는 주변 시세를 따라가기 때문이다. 연립은 배율이 가장 낮지만 절대 월세(102.9만원)가 유독 높아 보인다. 이는 연립의 평균 전용면적이 61.6㎡(약 18.6평)로 다세대(35.1㎡, 약 10.6평)의 두 배 가까이 넓기 때문이다. ㎡당 월세로 환산하면 연립은 1.63만원/㎡으로 세 유형 중 가장 저렴하다. 즉, 연립의 월세가 높아 보이는 건 단가가 비싸서가 아니라 면적이 넓은 만큼 총액이 커지는 구조이기 때문이다.
+    </p>
+
+    <div class="cw">
+      <div class="cw-t">주택유형별 실제 월세 vs 적정 임대료 (만원)</div>
+      <div class="cw-s">적정 임대료 = 호실당 재조달 원가 × 3.5% ÷ 12</div>
+      <div class="legend">
+        <span class="legend-i"><span class="legend-d" style="background:#D94030;"></span>실제 월세</span>
+        <span class="legend-i"><span class="legend-d" style="background:#C8C2B6;"></span>적정 임대료</span>
+      </div>
+      <div style="height:160px; position:relative;"><canvas id="typeCompChart"></canvas></div>
+    </div>
+
+    <h2 class="sh">구축 vs 신축 — 절대값과 배율의 이중구조</h2>
+
+    <p class="bd">
+      준공 후 20년 이상 구축(2004년 이전) 건물과 10년 이내 신축(2015년 이후) 건물을 비교하면 역설적인 결과가 나온다. 구축의 절대 월세(60.2만원)는 신축(65.0만원)보다 낮다. 예산이 빠듯한 임차인에게 구축이 현실적 선택지인 이유다. 그러나 원가 대비 부풀림 배율은 구축(2.34배)이 신축(1.93배)보다 높다. 건물이 낡아가면서 재조달 원가는 낮아지는데, 월세는 주변 시세를 따라가며 크게 내려가지 않기 때문이다.
+    </p>
+
+    <div class="cw">
+      <div class="cw-t">건축연도 구간별 수익률 및 부풀림 배율</div>
+      <div class="cw-s">수익률 = 연간 총수입 ÷ 호실당 재조달 원가</div>
+      <div style="height:150px; position:relative;"><canvas id="segChart"></canvas></div>
+    </div>
+
+    <div class="pullout">
+      <p>절대 월세는 구축이 낮다. 하지만 그 건물의 원가 수준에 비하면 구축 임차인이 상대적으로 더 높은 거품을 감수하고 있었다.</p>
+    </div>
+  </div>
+
+  <div class="pf bdr">
+    <div class="pf-t">서울 원룸 임대료 원가 역산 연구 · 2026</div>
+    <div class="pf-t">원천 데이터 모델링을 통한 샘플 콘텐츠</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P9: 해석 ══════════════════════════ -->
+<div class="page result-page">
+  <div class="ph bdrl">
+    <div class="ph-label lt">해석 · 05</div>
+    <div class="ph-pg lt">09</div>
+  </div>
+
+  <div class="res-body" style="padding-top:44px;">
+    <h1 class="st lt" style="font-size:36px; margin-bottom:24px;">원가와 월세는<br>왜 연동되지 않는가</h1>
+
+    <p class="bd lt">
+      이 연구의 핵심 메시지는 "월세가 높다"는 게 아니다. <strong>원가와 월세 사이에 체계적인 연동이 없다</strong>는 것이다. 원가가 높은 건물이 반드시 월세가 높은 것도 아니고, 원가가 낮다고 월세가 낮은 것도 아니다.
+    </p>
+
+    <h2 class="sh lt" style="font-size:18px;">시세가 시세를 만드는 구조</h2>
+
+    <p class="bd lt">
+      임대료 결정의 가장 일반적인 방법은 '주변 시세 확인'이다. 그런데 이 시세 자체가 원가와 무관하게 형성된다. 예를 들어, 최근에는 전세에서 월세로의 전환이 가속화하면서 수요가 집중된 지역은 원가와 무관하게 시세가 오르고 있다. 금리 변동, 정부 정책, 교통 호재 등 외부 요인이 시세를 움직이고, 그 시세가 다음 임차인의 기준이 된다. 원가 정보는 이 순환 어디에도 개입하지 않는다.
+    </p>
+
+    <div class="pullout dk">
+      <p>임대인도, 임차인도, 공인중개사도 그 건물의 물리적 원가를 모른다. 모르는 상태에서 &#8216;시세&#8217;라는 집단 합의가 가격이 된다.</p>
+    </div>
+
+    <h2 class="sh lt" style="font-size:18px;">임차인은 비싸고, 임대인도 남는 게 없다?</h2>
+
+    <p class="bd lt">
+      최근 건설업계에서는 "인건비와 자재비가 올라 신축 원룸은 월 100만원을 받아도 운영이 어렵다"는 말이 나온다. 일리 있는 말이다. 이 연구는 금융비용·인건비 상승분·자재비 추가분을 포함하지 않았다. 이를 모두 포함하면 임대인의 실제 총투입 원가는 더 커지고, 실제 갭은 이 연구의 수치보다 줄어들 수 있다.
+    </p>
+
+    <p class="bd lt">
+      그렇다면 임대인은 정말 손해를 보고 있는 걸까. 총투입 원가가 크다고 해도, 수익성이 전혀 없는 사업에 아무도 뛰어들지 않는 것이 시장의 상식이다. 임대업이 완전히 손해라면 공급 자체가 사라질 것이다. 갭이 줄어들 수는 있어도 없어지지는 않는다는 얘기다.
+    </p>
+
+    <p class="bd lt">
+      결국 임차인은 원가 대비 비싸게 내고 있다고 느끼고, 임대인은 총투입비용 대비 남는 게 없다고 느끼는 구조가 동시에 성립한다. 임대인도 자신의 정확한 원가를 어림잡아 추산할 뿐이고, 임차인은 그 원가를 전혀 알 수 없다. 서로가 불리하다고 느끼면서도 계약이 성사되는 구조, 그것이 이 시장의 민낯이다.
+    </p>
+
+    <div class="ibox dk">
+      <div class="ibox-t">이 연구가 물리적 재조달 원가를 기준으로 삼은 이유</div>
+      금융비용은 임대업자마다 다르고 개별 데이터를 일반화할 수 없다. 반면 공시지가와 건설비 지수는 공개 데이터로 누구나 재현 가능하다. '이 건물을 지금 다시 짓는다면 얼마인가'라는 물음에는 단일한 객관적 답이 존재한다. 이 객관성이 이 연구의 기반이다.
+    </div>
+  </div>
+
+  <div class="pf bdrl">
+    <div class="pf-t lt">서울 원룸 임대료 원가 역산 연구 · 2026</div>
+    <div class="pf-t lt">원천 데이터 모델링을 통한 샘플 콘텐츠</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P10: 결론 ══════════════════════════ -->
+<div class="page analysis-page">
+  <div class="ph bdr">
+    <div class="ph-label">결론 · 06</div>
+    <div class="ph-pg">10</div>
+  </div>
+
+  <div class="body-wrap">
+    <h1 class="st">계약서에 도장 찍기 전<br>&#8216;알 권리&#8217;가 있다</h1>
+
+    <p class="bd">
+      82,957건을 분석한 결과는 명확하다. 서울 원룸 월세는 재조달 원가 기반 적정 임대료의 평균 두 배 이상 높다.
+    </p>
+
+    <div class="mc-row c3">
+      <div class="mc r">
+        <div class="mc-l">부풀림 배율</div>
+        <div class="mc-v">2.22배</div>
+        <div class="mc-d">적정 임대료 대비 실제 월세</div>
+      </div>
+      <div class="mc b">
+        <div class="mc-l">월 초과 부담</div>
+        <div class="mc-v">20.8만</div>
+        <div class="mc-d">호실당 평균 / 연 2,074억원</div>
+      </div>
+      <div class="mc g">
+        <div class="mc-l">회수 기간 중앙값</div>
+        <div class="mc-v">16.5년</div>
+        <div class="mc-d">건물 수명의 1/3 수준</div>
+      </div>
+    </div>
+
+    <p class="bd">
+      숫자는 구조를 보여줄 뿐, 그 구조 안의 사람을 보여주지는 않는다. 서울 어딘가의 원룸에서 누군가는 오늘도 적정 임대료의 곱절을 부담한다. 하지만 그 시세가 어떻게 형성됐는지, 이 건물의 원가가 실제로 얼마인지를 아는 사람은 거의 없다. 임대인도, 임차인도, 공인중개사도 대부분 관행에 의존해 거래를 한다. 월세 시장의 정보는 여전히 비대칭적이고, 불투명하다.
+    </p>
+
+    <p class="bd">
+      임대료를 규제하자는 이야기가 아니다. 계약서에 도장 찍기 전에, 내가 사는 곳의 월세가 얼마나 부풀려졌는지 확인할 수 있어야 한다. 계약 전에 최소한의 정보가 투명하게 공유될 필요가 있다는 문제의식은 자명하다.
+    </p>
+
+    <p class="bd">
+      때마침 정부도 움직이기 시작했다. 주택도시보증공사(HUG)는 2026년 5월, 그간 정보 사각지대에 놓여 있던 빌라(연립·다세대) 시세를 지도 기반으로 시각화해 공개하겠다고 밝혔다. 정보 투명화에 대한 문제의식이 공공 영역에서도 구체적 행동으로 이어지고 있다는 신호다.
+    </p>
+
+    <p class="bd">
+      생각해보면 이상한 일이다. 카페에서 커피 한 잔을 살 때도 원두 원산지를 확인하고, 옷을 살 때도 소재를 따진다. 그런데 매달 수십만 원을 내야 하는 내 방이 무엇으로 만들어져 어떻게 이 가격이 매겨졌는지는 아무도 알려주지 않는다. 물건값이 비싸도 품질 좋은 재료를 쓴다든지, 물가가 올라 최소 수익을 확보해야 한다든지 객관적인 근거가 있으면 납득이 된다. 그런데 지금 임대 시장에는 그 근거가 없다. 월세는 치솟는데, 임차인은 주거의 질이 낮은 곳으로, 더 낮은 곳으로 흘러간다. 정보가 없으면 공정한 거래도, 주거의 안정성도 없다. 원룸을 짓는 데 드는 총체적 비용을 투명화하면, 시장은 한층 공정해지고 합리적으로 변할 수 있다. 주거 시장의 공정한 거래를 위해 공공의 의지와 시장의 변화가 함께 가야 할 때다.
+    </p>
+  </div>
+
+  <div class="pf bdr">
+    <div class="pf-t">서울 원룸 임대료 원가 역산 연구 · 2026</div>
+    <div class="pf-t">원천 데이터 모델링을 통한 샘플 콘텐츠</div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+// 산포도 — 25개구 매트릭스
+const guMatrix = [
+  {gu:'용산구', rent:99.0, ratio:2.16, cnt:2406, quad:'A'},
+  {gu:'강남구', rent:94.0, ratio:1.78, cnt:3430, quad:'A'},
+  {gu:'서초구', rent:84.0, ratio:1.95, cnt:3925, quad:'A'},
+  {gu:'중구',   rent:65.9, ratio:1.67, cnt:1093, quad:'A'},
+  {gu:'마포구', rent:65.5, ratio:1.67, cnt:5011, quad:'A'},
+  {gu:'종로구', rent:71.6, ratio:2.31, cnt:1864, quad:'B'},
+  {gu:'서대문구',rent:61.1, ratio:2.95, cnt:4634, quad:'B'},
+  {gu:'송파구', rent:60.0, ratio:1.51, cnt:8892, quad:'C'},
+  {gu:'금천구', rent:55.8, ratio:1.96, cnt:994,  quad:'C'},
+  {gu:'구로구', rent:55.1, ratio:1.73, cnt:1035, quad:'C'},
+  {gu:'강서구', rent:55.0, ratio:1.75, cnt:4354, quad:'C'},
+  {gu:'동작구', rent:54.4, ratio:1.74, cnt:5262, quad:'C'},
+  {gu:'관악구', rent:54.3, ratio:1.85, cnt:2746, quad:'C'},
+  {gu:'강동구', rent:53.8, ratio:1.82, cnt:4946, quad:'C'},
+  {gu:'강북구', rent:53.1, ratio:1.86, cnt:1335, quad:'C'},
+  {gu:'양천구', rent:52.0, ratio:1.58, cnt:2106, quad:'C'},
+  {gu:'은평구', rent:51.8, ratio:1.78, cnt:2796, quad:'C'},
+  {gu:'영등포구',rent:51.5, ratio:1.41, cnt:1892, quad:'C'},
+  {gu:'도봉구', rent:46.8, ratio:1.56, cnt:971,  quad:'C'},
+  {gu:'노원구', rent:44.0, ratio:2.15, cnt:2093, quad:'C'},
+  {gu:'성동구', rent:59.9, ratio:2.26, cnt:1564, quad:'D'},
+  {gu:'광진구', rent:57.3, ratio:4.54, cnt:6726, quad:'D'},
+  {gu:'성북구', rent:55.9, ratio:3.07, cnt:5622, quad:'D'},
+  {gu:'동대문구',rent:54.8, ratio:2.34, cnt:3143, quad:'D'},
+  {gu:'중랑구', rent:50.2, ratio:2.56, cnt:4117, quad:'D'},
+];
+
+const quadColors = { A:'#1e1c19', B:'#D94030', C:'#9a9288', D:'#8B3A3A' };
+
+var el = document.getElementById('matrixScatter');
+if(el) new Chart(el, {
+  type:'scatter',
+  data:{
+    datasets:[{
+      data: guMatrix.map(d=>({x:d.rent, y:d.ratio, label:d.gu, quad:d.quad, cnt:d.cnt})),
+      backgroundColor: guMatrix.map(d=>quadColors[d.quad]+'cc'),
+      pointRadius: guMatrix.map(d=>Math.sqrt(d.cnt/100)+4),
+      pointHoverRadius: guMatrix.map(d=>Math.sqrt(d.cnt/100)+7),
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:ctx=>`${ctx.raw.label} (${ctx.raw.quad}) — 월세 ${ctx.raw.x}만원, 배율 ${ctx.raw.y}배`}}
+    },
+    scales:{
+      x:{title:{display:true,text:'평균 월세 (만원)',font:{size:10},color:'#6B6560'},grid:{color:'#DDD8CC'},ticks:{font:{size:10},color:'#6B6560',callback:v=>v+'만'},min:40,max:110},
+      y:{title:{display:true,text:'부풀림 배율',font:{size:10},color:'#6B6560'},grid:{color:'#DDD8CC'},ticks:{font:{size:10},color:'#6B6560',callback:v=>v+'배'},min:1,max:5}
+    }
+  },
+  plugins:[{
+    afterDraw(chart){
+      const ctx2=chart.ctx, xScale=chart.scales.x, yScale=chart.scales.y;
+      ctx2.save();
+      ctx2.setLineDash([4,4]);
+      ctx2.strokeStyle='rgba(217,64,48,0.3)';
+      ctx2.lineWidth=1;
+      const xLine=xScale.getPixelForValue(60.6);
+      ctx2.beginPath(); ctx2.moveTo(xLine,chart.chartArea.top); ctx2.lineTo(xLine,chart.chartArea.bottom); ctx2.stroke();
+      const yLine=yScale.getPixelForValue(2.22);
+      ctx2.beginPath(); ctx2.moveTo(chart.chartArea.left,yLine); ctx2.lineTo(chart.chartArea.right,yLine); ctx2.stroke();
+      chart.data.datasets[0].data.forEach(d=>{
+        const x=xScale.getPixelForValue(d.x), y=yScale.getPixelForValue(d.y);
+        ctx2.fillStyle='rgba(30,28,25,0.8)'; ctx2.font='9px IBM Plex Mono, monospace';
+        ctx2.fillText(d.label, x+6, y-4);
+      });
+      ctx2.restore();
+    }
+  }]
+});
+
+// 구별 원가 회수 기간 바 차트
+var guData = [{g:'영등포구',y:38.0},{g:'도봉구',y:30.7},{g:'송파구',y:30.6},{g:'중구',y:30.2},{g:'양천구',y:30.1},{g:'강서구',y:29.1},{g:'은평구',y:27.7},{g:'노원구',y:26.8},{g:'강동구',y:26.3},{g:'구로구',y:25.9},{g:'서초구',y:25.6},{g:'관악구',y:25.5},{g:'마포구',y:25.5},{g:'금천구',y:25.0},{g:'강남구',y:25.0},{g:'강북구',y:24.4},{g:'동작구',y:23.6},{g:'용산구',y:20.4},{g:'중랑구',y:20.1},{g:'종로구',y:19.6},{g:'성동구',y:19.5},{g:'서대문구',y:19.3},{g:'동대문구',y:17.4},{g:'광진구',y:16.8},{g:'성북구',y:15.9}];
+el = document.getElementById('guBarChart');
+if(el) new Chart(el, {
+  type:'bar',
+  data:{labels:guData.map(d=>d.g), datasets:[{data:guData.map(d=>d.y), backgroundColor:guData.map((d,i)=>i<5?'#D94030':i>=guData.length-5?'#6B6560':'#C8C2B6'), borderRadius:2}]},
+  options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{color:'#DDD8CC'},ticks:{font:{size:9},color:'#6B6560',callback:v=>v+'년'}},y:{grid:{display:false},ticks:{font:{size:9},color:'#2e2b26'}}}}
+});
+
+// 유형 분포
+el = document.getElementById('typeDistChart');
+if(el) new Chart(el, {
+  type:'bar',
+  data:{labels:['다세대','단독다가구','연립'],datasets:[{data:[54481,26499,1977],backgroundColor:['#D94030','#141210','#9a9288'],borderRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw.toLocaleString()}건 (${(ctx.raw/82957*100).toFixed(1)}%)`}}},scales:{y:{grid:{color:'#DDD8CC'},ticks:{font:{size:10},color:'#6B6560',callback:v=>v.toLocaleString()}},x:{grid:{display:false},ticks:{font:{size:12},color:'#2e2b26'}}}}
+});
+
+// 유형별 비교
+el = document.getElementById('typeCompChart');
+if(el) new Chart(el, {
+  type:'bar',
+  data:{labels:['단독다가구','다세대','연립'],datasets:[{label:'실제 월세',data:[56.9,60.9,102.9],backgroundColor:'#D94030',borderRadius:3},{label:'적정 임대료',data:[34.2,41.4,69.6],backgroundColor:'#C8C2B6',borderRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{color:'#DDD8CC'},ticks:{font:{size:10},color:'#6B6560',callback:v=>v+'만'}},x:{grid:{display:false},ticks:{font:{size:12},color:'#2e2b26'}}}}
+});
+
+// 건축연도 구간별
+el = document.getElementById('segChart');
+if(el) new Chart(el, {
+  type:'bar',
+  data:{labels:['구축 (20년+)','중간 (10~20년)','신축 (10년-)'],datasets:[{label:'부풀림 배율',data:[2.34,2.0,1.93],backgroundColor:['#D94030','#9a9288','#1e1c19'],borderRadius:3}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`부풀림 ${ctx.raw}배`}}},scales:{y:{grid:{color:'#DDD8CC'},ticks:{font:{size:10},color:'#6B6560',callback:v=>v+'배'},max:3,beginAtZero:true},x:{grid:{display:false},ticks:{font:{size:11},color:'#2e2b26'}}}}
+});
+
+});
+</script>
+
+<!-- ══════════════════════════ 부록 표지 ══════════════════════════ -->
+<div class="page" style="background:var(--cream-2);">
+  <div class="ph bdr"><div class="ph-label">부록</div><div class="ph-pg">—</div></div>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 56px;">
+    <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.22em; color:var(--gray); text-transform:uppercase; margin-bottom:2rem;">Appendix</div>
+    <h1 style="font-family:var(--grotesk); font-size:52px; font-weight:700; line-height:1.1; color:var(--black); margin-bottom:1.5rem; letter-spacing:-0.03em;">방법론 및<br>데이터 근거</h1>
+    <p style="font-size:15px; color:var(--gray); line-height:1.7; max-width:500px; margin-bottom:3rem;">본문에서 언급된 분석 방법, 원가 산정식, 데이터 출처, 보간 방법론, 필터링 기준의 상세 내용을 기술한다. 재현 가능성과 방법론적 투명성을 위해 작성했다.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%;">
+      <div style="background:var(--white); border:1px solid var(--cream-3); border-radius:3px; padding:14px 18px;">
+        <div style="font-family:var(--mono); font-size:9px; letter-spacing:0.18em; color:var(--gray); margin-bottom:5px; text-transform:uppercase;">Appendix A</div>
+        <div style="font-weight:600; font-size:13px; color:var(--black);">데이터 출처 및 수집 방법</div>
+      </div>
+      <div style="background:var(--white); border:1px solid var(--cream-3); border-radius:3px; padding:14px 18px;">
+        <div style="font-family:var(--mono); font-size:9px; letter-spacing:0.18em; color:var(--gray); margin-bottom:5px; text-transform:uppercase;">Appendix B</div>
+        <div style="font-weight:600; font-size:13px; color:var(--black);">원가 산정식 상세</div>
+      </div>
+      <div style="background:var(--white); border:1px solid var(--cream-3); border-radius:3px; padding:14px 18px;">
+        <div style="font-family:var(--mono); font-size:9px; letter-spacing:0.18em; color:var(--gray); margin-bottom:5px; text-transform:uppercase;">Appendix C</div>
+        <div style="font-weight:600; font-size:13px; color:var(--black);">건축 단가 보간 방법론</div>
+      </div>
+      <div style="background:var(--white); border:1px solid var(--cream-3); border-radius:3px; padding:14px 18px;">
+        <div style="font-family:var(--mono); font-size:9px; letter-spacing:0.18em; color:var(--gray); margin-bottom:5px; text-transform:uppercase;">Appendix D</div>
+        <div style="font-weight:600; font-size:13px; color:var(--black);">필터링 기준 및 한계</div>
+      </div>
+    </div>
+  </div>
+  <div class="pf bdr"><div class="pf-t">서울 원룸 임대료 원가 역산 연구 · 2026</div><div class="pf-t">Appendix</div></div>
+</div>
+
+<!-- ══════════════════════════ 부록 A+B ══════════════════════════ -->
+<div class="page" style="background:var(--cream-2);">
+  <div class="ph bdr"><div class="ph-label">Appendix A — 데이터 출처</div><div class="ph-pg">A</div></div>
+  <div class="body-wrap" style="padding-top:32px;">
+    <h1 class="st" style="font-size:28px; margin-bottom:20px;">데이터 출처 및 수집 방법</h1>
+
+    <table class="dt" style="font-size:12px; margin-bottom:28px;">
+      <thead>
+        <tr>
+          <th>데이터</th><th>출처</th><th>범위</th><th>수집 방법</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="font-weight:500;">임대차 실거래가</td><td>국토부 실거래가 공개 API</td><td>2025.04~2026.04</td><td>API 직접 수집</td></tr>
+        <tr><td style="font-weight:500;">공시지가</td><td>국토교통부 (2025년 기준)</td><td>2025년</td><td>실거래 데이터 수집</td></tr>
+        <tr><td style="font-weight:500;">건물신축단가표</td><td>한국감정원(현 한국부동산원)</td><td>1988~2025년</td><td style="color:var(--red); font-weight:500;">국회도서관 자료 수집</td></tr>
+        <tr><td style="font-weight:500;">건설공사비지수 (CCCI)</td><td>한국은행 경제통계시스템</td><td>2000~2026년</td><td>ECOS API</td></tr>
+        <tr><td style="font-weight:500;">생산자물가지수 (PPI)</td><td>한국감정원 단가표 부록</td><td>1971~1995년 (1990=100)</td><td style="color:var(--red); font-weight:500;">국회도서관 자료 수집</td></tr>
+        <tr><td style="font-weight:500;">간주임대료율</td><td>국세청 고시</td><td>2021~2026년</td><td>관보 수집</td></tr>
+      </tbody>
+    </table>
+
+    <div style="border-top:2px solid var(--black); padding-top:20px; margin-top:4px;">
+      <h2 class="sh" style="margin-top:0; font-size:18px;">Appendix B — 원가 산정식</h2>
+    </div>
+
+    <h3 class="ssh">전체 구조</h3>
+    <div style="background:var(--black); color:#a8d8a8; font-family:var(--mono); font-size:11.5px; padding:16px 18px; border-radius:3px; margin:10px 0 14px; line-height:2.0; white-space:pre; overflow-x:auto;">unit_cost_10k = total_cost_10k × (area_m2 / total_area_m2)
+
+total_cost_10k = land_cost_10k + building_cost_10k
+
+land_cost_10k     = land_price(공시지가) × land_area_m2 / 10,000
+building_cost_10k = total_area_m2 × bc.cost_per_m2
+                    × SAFE_DIVIDE(ccci_at_contract, ccci_or_ppi_at_build)
+                    / 10,000</div>
+
+    <div class="ibox" style="margin-bottom:12px;">
+      <div class="ibox-t">산정식 풀이 — 왜 이렇게 계산했나</div>
+      <p style="font-size:13px; line-height:1.8; color:#3d3a34; margin-bottom:8px;">
+        <strong>① 내 방 원가(unit_cost)</strong> — 건물 전체 원가 중 내 방 면적 비율만큼 떼어낸다. 예를 들어 건물 원가가 10억이고 내 방이 건물 전체의 10%라면, 내 방 원가는 1억이다.
+      </p>
+      <p style="font-size:13px; line-height:1.8; color:#3d3a34; margin-bottom:8px;">
+        <strong>② 토지 원가(land_cost)</strong> — 국가가 매년 고시하는 공시지가(㎡당 가격)에 건물이 서 있는 땅 면적을 곱한다. "이 땅은 얼마짜리인가"를 구하는 것이다.
+      </p>
+      <p style="font-size:13px; line-height:1.8; color:#3d3a34; margin-bottom:0;">
+        <strong>③ 건축 원가(building_cost)</strong> — 건물신축단가표의 ㎡당 공사비에 연면적을 곱한다. 그런데 오래된 건물일수록 당시 단가표가 없다. 이를 보완하기 위해 건설물가지수(CCCI)를 활용한다. "2002년 기준 공사비를 오늘 물가로 환산하면 얼마인가"를 계산하는 것이다. CCCI가 없는 더 오래된 시기는 생산자물가지수(PPI)로 대체한다.
+      </p>
+    </div>
+
+    <h3 class="ssh">적정 임대료 산출</h3>
+    <div style="background:var(--black); color:#a8d8a8; font-family:var(--mono); font-size:11.5px; padding:16px 18px; border-radius:3px; margin:10px 0 14px; line-height:2.0; white-space:pre; overflow-x:auto;">fair_rent_10k   = unit_cost_10k × deemed_rate / 12
+excess_rent_10k = monthly_rent_10k - fair_rent_10k
+inflation_ratio = monthly_rent_10k / fair_rent_10k
+
+-- 간주임대료율(deemed_rate): 2024~2025년 = 0.035 (3.5%, 국세청 고시)</div>
+
+    <div class="ibox" style="margin-bottom:12px;">
+      <div class="ibox-t">적정 임대료 풀이</div>
+      <p style="font-size:13px; line-height:1.8; color:#3d3a34; margin-bottom:0;">
+        <strong>적정 임대료(fair_rent)</strong>는 내 방 원가에 간주임대료율 3.5%를 곱한 뒤 12개월로 나눈 값이다. 간주임대료율은 국세청이 매년 고시하는 세법상 자본의 기회비용 지표로, 쉽게 말해 "건물에 투자한 돈을 정기예금에 넣었을 때 받는 이자율" 수준이다. 이보다 더 받으면 초과 부담(excess_rent), 그 비율이 부풀림 배율(inflation_ratio)이다.
+      </p>
+    </div>
+
+    <h3 class="ssh">수익률 및 회수 기간</h3>
+    <div style="background:var(--black); color:#a8d8a8; font-family:var(--mono); font-size:11.5px; padding:16px 18px; border-radius:3px; margin:10px 0 14px; line-height:2.0; white-space:pre; overflow-x:auto;">annual_rent_10k         = monthly_rent_10k × 12
+deposit_yield_10k       = deposit_10k × deemed_rate
+total_annual_income_10k = annual_rent_10k + deposit_yield_10k
+
+income_to_cost_ratio = total_annual_income_10k / unit_cost_10k
+cost_recovery_years  = unit_cost_10k / annual_rent_10k</div>
+
+    <div class="ibox">
+      <div class="ibox-t">수익률 및 회수 기간 풀이</div>
+      <p style="font-size:13px; line-height:1.8; color:#3d3a34; margin-bottom:10px;">
+        <strong>연 임대 수입(annual_rent)</strong> — 월세에 12를 곱한다. 임대인이 1년 동안 월세로 받는 총금액이다.
+      </p>
+      <p style="font-size:13px; line-height:1.8; color:#3d3a34; margin-bottom:10px;">
+        <strong>보증금 운용 수익(deposit_yield)</strong> — 보증금도 임대인 손에 들어온 돈이다. 이 돈을 간주임대료율(3.5%)로 굴린다고 가정했을 때 얻을 수 있는 연간 수익을 더해준다. 보증금 없이 월세만 받는 계약이라면 이 항목은 0이 된다.
+      </p>
+      <p style="font-size:13px; line-height:1.8; color:#3d3a34; margin-bottom:10px;">
+        <strong>수익률(income_to_cost_ratio)</strong> — 연간 총수입(월세 + 보증금 운용수익)을 내 방 원가로 나눈 값이다. 쉽게 말해, "이 방에 투자한 돈 대비 1년에 몇 %를 벌어들이는가"다. 예를 들어 원가가 1억이고 연간 수입이 720만원이면 수익률은 7.2%다.
+      </p>
+      <p style="font-size:13px; line-height:1.8; color:#3d3a34; margin-bottom:0;">
+        <strong>원가 회수 기간(cost_recovery_years)</strong> — 내 방 원가를 연간 월세 수입으로 나눈 값이다. 지금 월세 수준을 유지했을 때 원가 전액을 회수하는 데 몇 년이 걸리는지를 보여준다. 원가가 1억이고 연 월세 수입이 720만원이면 회수 기간은 약 13.9년이다. 보증금 운용 수익은 이 계산에 포함하지 않았다 — 월세라는 단일 지표로 비교 가능성을 높이기 위해서다.
+      </p>
+    </div>
+
+  </div>
+  <div class="pf bdr"><div class="pf-t">서울 원룸 임대료 원가 역산 연구 · 2026</div><div class="pf-t">Appendix A · B</div></div>
+</div>
+
+<!-- ══════════════════════════ 부록 C+D ══════════════════════════ -->
+<div class="page" style="background:var(--cream-2);">
+  <div class="ph bdr"><div class="ph-label">Appendix C — 보간 방법론</div><div class="ph-pg">B</div></div>
+  <div class="body-wrap" style="padding-top:32px;">
+    <h1 class="st" style="font-size:26px; margin-bottom:16px;">건축 단가 보간 방법론</h1>
+
+    <div class="ibox" style="margin-bottom:16px;">
+      <div class="ibox-t">보간이란 무엇인가</div>
+      <p style="font-size:13px; line-height:1.8; color:#3d3a34; margin-bottom:0;">
+        건물신축단가표는 모든 연도의 값이 있지 않다. 특정 연도 기록이 빠져 있을 때, 앞뒤 실측값 사이를 합리적으로 채우는 작업이 <strong>보간(interpolation)</strong>이다. 예를 들어 1992년과 1994년 값은 있는데 1993년이 없다면, 두 값의 중간쯤을 1993년 값으로 추정하는 방식이다. 이렇게 해야 1993년에 지어진 건물에도 원가를 적용할 수 있다.
+      </p>
+    </div>
+
+    <p class="bd" style="font-size:13.5px;">단기 공백(1~2년)은 앞뒤 실측값을 직선으로 연결하는 <strong>선형 보간</strong>을 적용했다. 장기 공백(2003~2014년)은 같은 기간 건설물가 변화를 측정한 CCCI 지수를 이용해 2002년 실측값을 연도별로 역산했다. 매우 오래된 시기(1987년 이전)는 선형 보간에 PPI 지수로 검증을 추가했다.</p>
+
+    <table style="width:100%; border-collapse:collapse; font-size:12px; margin:12px 0 16px;">
+      <thead>
+        <tr style="background:var(--cream-3);">
+          <th style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);padding:7px 10px;border-bottom:1px solid var(--cream-3);text-align:left;">구간</th>
+          <th style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);padding:7px 10px;border-bottom:1px solid var(--cream-3);text-align:left;">공백 연도</th>
+          <th style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);padding:7px 10px;border-bottom:1px solid var(--cream-3);text-align:left;">방법</th>
+          <th style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);padding:7px 10px;border-bottom:1px solid var(--cream-3);text-align:left;">앵커</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:var(--white);"><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);">단기 공백</td><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);font-family:var(--mono);font-size:10px;">1993, 1995, 1997, 1999, 2001</td><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);">선형 보간</td><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);">인접 실측값 쌍</td></tr>
+        <tr style="background:var(--white);"><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);">중기 공백</td><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);font-family:var(--mono);font-size:10px;">1989~1991</td><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);">선형 보간</td><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);">1988 ↔ 1992</td></tr>
+        <tr style="background:var(--white);"><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);">장기 공백</td><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);font-family:var(--mono);font-size:10px;">2003~2014</td><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);">CCCI 역산</td><td style="padding:6px 10px;border-bottom:1px solid var(--cream-2);">2002년 실측</td></tr>
+        <tr style="background:var(--white);"><td style="padding:6px 10px;">고물가기</td><td style="padding:6px 10px;font-family:var(--mono);font-size:10px;">~1987</td><td style="padding:6px 10px;">선형 + PPI 검증</td><td style="padding:6px 10px;">1988 실측</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="ssh">CCCI 역산 공식 (2003~2014년)</h3>
+    <div style="background:var(--black); color:#a8d8a8; font-family:var(--mono); font-size:11.5px; padding:14px 18px; border-radius:3px; margin:8px 0 14px; line-height:2.0; white-space:pre; overflow-x:auto;">cost_per_m2(year) = cost_per_m2(2002)
+                × (ccci_avg(year) / ccci_avg(2002))</div>
+
+    <h3 class="ssh">PPI 정규화 공식 (build_year &lt; 2000)</h3>
+    <div style="background:var(--black); color:#a8d8a8; font-family:var(--mono); font-size:11.5px; padding:14px 18px; border-radius:3px; margin:8px 0 16px; line-height:2.0; white-space:pre; overflow-x:auto;">-- CCCI와 동일한 스케일로 변환
+ppi_normalized(year) = ppi_avg(year)
+                     / ppi_avg(1995)
+                     × ccci_avg(2000)
+
+-- CCCI 우선, 없으면 PPI 대체
+ccci_or_ppi = COALESCE(ccci_at_build, ppi_normalized)</div>
+
+    <div style="border-top:2px solid var(--black); padding-top:18px; margin-top:4px;">
+      <h2 class="sh" style="margin-top:0; font-size:18px;">Appendix D — 필터링 기준 및 한계</h2>
+    </div>
+
+    <div class="pullout" style="margin:14px 0;">
+      <p>이 연구의 원가는 현재 시점 재조달 원가다. 건축 당시 실제 투입 원가가 아니므로, 오래된 건물의 실제 취득 원가는 이 연구의 추정값보다 낮을 수 있다.</p>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 16px;">
+      <span style="font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:2px;background:var(--red-s);color:var(--red);">금융비용 미포함</span>
+      <span style="font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:2px;background:var(--red-s);color:var(--red);">설계·감리비 미포함</span>
+      <span style="font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:2px;background:var(--red-s);color:var(--red);">관리비 미포함</span>
+      <span style="font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:2px;background:var(--cream-3);color:var(--gray);">오피스텔 제외</span>
+      <span style="font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:2px;background:var(--cream-3);color:var(--gray);">재조달 원가 기준</span>
+      <span style="font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:2px;background:var(--cream-3);color:var(--gray);">건물 내용연수 100년 상한</span>
+    </div>
+
+    <div class="ibox">
+      <div class="ibox-t">한계점</div>
+      <p style="font-size:13px; line-height:1.8; color:#3d3a34; margin-bottom:0;">이 연구의 원가 산정에는 금융비용(대출이자 등)을 포함하지 않았다. 임대인의 실제 총투입 비용에는 토지·건축비 외에도 대출이자, 설계·감리비, 인허가비, 관리비 등이 포함된다. 이를 포함할 경우 임대인의 총원가는 이 연구의 추정치보다 커지며, 실제 부풀림 갭은 줄어들 수 있다. 이 연구는 공개 데이터로 재현 가능한 물리적 원가(토지+건축비)만을 기준으로 삼은 객관적 비교선이다.</p>
+    </div>
+
+  </div>
+  <div class="pf bdr"><div class="pf-t">서울 원룸 임대료 원가 역산 연구 · 2026</div><div class="pf-t">Appendix C · D</div></div>
+</div>
+
+</body>
+</html>
