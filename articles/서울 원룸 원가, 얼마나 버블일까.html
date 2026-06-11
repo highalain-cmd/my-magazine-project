@@ -28,13 +28,16 @@ body { background: #1a1a18; font-family: var(--inter); }
 
 /* ── 페이지 공통 ── */
 .page {
-  width: 794px;
-  min-height: 1123px;
-  margin: 28px auto;
+  width: 100%;
+  max-width: 860px;
+  min-height: auto;
+  margin: 22px auto;
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
+  border-radius: 14px;
+  box-shadow: 0 10px 44px rgba(0,0,0,.30);
 }
 
 .ph { /* page header */
@@ -376,12 +379,61 @@ hr.rl.dk { border-top-color:rgba(255,255,255,.08); }
    P10 — 결론
 ════════════════════════════════ */
 
+
+/* ═══════════ 반응형 + 흐름 (재구성 추가분) ═══════════ */
+body{ padding: 8px 0 40px; }
+.cover{ min-height: 78vh; }           /* 표지 존재감 유지 */
+.toc-page,.result-page{ min-height: auto; }
+
+/* 스크롤 등장 */
+.page{ opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
+.page.in{ opacity:1; transform:none; }
+
+/* 스크롤 진행 바 */
+.rprogress{ position:fixed; top:0; left:0; height:3px; width:0; z-index:60;
+  background:linear-gradient(90deg,var(--red),#ff8570); transition:width .1s; }
+
+@media (max-width:760px){
+  .page{ margin:14px auto; border-radius:10px; }
+  .ph,.pf,.toc-top,.toc-foot{ padding-left:24px; padding-right:24px; }
+  .cv-top{ padding:24px 24px; }
+  .body-wrap{ padding:32px 24px; }
+  .res-hero{ padding:36px 24px 26px; }
+  .res-body{ padding:30px 24px 0; }
+
+  .intro-split{ grid-template-columns:1fr; }    /* 사이드바 → 세로 */
+  .intro-l{ padding:34px 26px; }
+  .intro-l-t{ font-size:34px; }
+  .intro-r{ padding:30px 26px; }
+
+  .cv-body{ padding:0 24px 42px; }
+  .cv-title{ font-size:clamp(56px,17vw,90px); }
+  .cv-bottom{ flex-direction:column; gap:18px; align-items:flex-start; }
+
+  .res-big{ font-size:clamp(86px,27vw,150px); }
+  h1.st{ font-size:30px; }
+
+  .mc-row.c3,.mc-row.c2,.two-col,.rsg{ grid-template-columns:1fr; }
+  .matrix-grid{ grid-template-columns:1fr; grid-template-rows:auto; height:auto; }
+
+  .toc-item{ grid-template-columns:32px 1fr 26px; }
+  .toc-ttl{ font-size:16px; }
+  .toc-item.ft .toc-ttl{ font-size:16.5px; }
+
+  /* 넓은 표는 가로 스크롤 허용 */
+  .body-wrap table{ display:block; overflow-x:auto; white-space:nowrap; }
+}
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  .page{ opacity:1; transform:none; transition:none; }
+}
 </style>
 </head>
 <body>
+<div class="rprogress" id="rprogress"></div>
 
 <!-- ══════════════════════════ P0-1: 들어가기 전에 — 사과문 + 한계① ══════════════════════════ -->
-<div class="page" style="background:var(--cream); overflow:visible; height:auto; min-height:1123px;">
+<div class="page" style="background:var(--cream); overflow:visible; height:auto; ">
   <div class="ph bdr">
     <div class="ph-label">들어가기 전에 · Note</div>
     <div class="ph-pg">—</div>
@@ -434,7 +486,7 @@ hr.rl.dk { border-top-color:rgba(255,255,255,.08); }
 </div>
 
 <!-- ══════════════════════════ P0-2: 들어가기 전에 — 한계② + 읽는 법 ══════════════════════════ -->
-<div class="page" style="background:var(--cream); overflow:visible; height:auto; min-height:1123px;">
+<div class="page" style="background:var(--cream); overflow:visible; height:auto; ">
   <div class="ph bdr">
     <div class="ph-label">들어가기 전에 · Note</div>
     <div class="ph-pg">—</div>
@@ -480,7 +532,7 @@ hr.rl.dk { border-top-color:rgba(255,255,255,.08); }
 </div>
 
 <!-- ══════════════════════════ P0-3: 들어가기 전에 — 작업 이유 + 다음 ══════════════════════════ -->
-<div class="page" style="background:var(--cream); overflow:visible; height:auto; min-height:1123px;">
+<div class="page" style="background:var(--cream); overflow:visible; height:auto; ">
   <div class="ph bdr">
     <div class="ph-label">들어가기 전에 · Note</div>
     <div class="ph-pg">—</div>
@@ -1422,5 +1474,22 @@ ccci_or_ppi = COALESCE(ccci_at_build, ppi_normalized)</div>
   <div class="pf bdr"><div class="pf-t">서울 원룸 임대료 원가 역산 연구 · 2026</div><div class="pf-t">Appendix C · D</div></div>
 </div>
 
+
+<script>
+(function(){
+  var pb=document.getElementById('rprogress');
+  if(pb){window.addEventListener('scroll',function(){
+    var h=document.documentElement;
+    pb.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  },{passive:true});}
+  var pages=document.querySelectorAll('.page');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    },{threshold:.06, rootMargin:'0px 0px -4% 0px'});
+    pages.forEach(function(p){ io.observe(p); });
+  } else { pages.forEach(function(p){ p.classList.add('in'); }); }
+})();
+</script>
 </body>
 </html>
