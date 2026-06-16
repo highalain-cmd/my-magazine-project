@@ -83,18 +83,18 @@ if html_file_path and os.path.exists(html_file_path):
     # 본문 아티클 출력
     components.html(html_content, height=1300, scrolling=True)
     
-   # --- 💬 하단 디스커스 댓글창 구역 ---
+    # --- 💬 하단 디스커스 댓글창 구역 ---
     st.markdown("---")
     st.subheader("💬 댓글을 남겨주세요")
-
+    
     disqus_html = f"""
     <div id="disqus_thread"></div>
     <script>
         var disqus_config = function () {{
-            this.page.url = "https://buzz-buzz.streamlit.app/article/" + encodeURIComponent("{selected_article_title}");
-            this.page.identifier = "{selected_article_title}";
+            this.page.url = window.parent.location.href;  // 스트림릿 실제 주소 자동 인식
+            this.page.identifier = "{selected_article_title}"; // 아티클 제목별로 댓글창 분리
         }};
-        (function() {{
+        (function() {{ 
             var d = document, s = d.createElement('script');
             s.src = 'https://{DISQUS_SHORTNAME}.disqus.com/embed.js';
             s.setAttribute('data-timestamp', +new Date());
@@ -112,23 +112,6 @@ if html_file_path and os.path.exists(html_file_path):
         }}
     </style>
     """
-    # 댓글창 렌더링
-    components.html(disqus_html, height=600, scrolling=True)
-
-    # --- 📮 푸터 Contact (댓글창 아래) ---
-    st.markdown(
-        """
-        <div style="
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-            text-align: center;
-            padding: 28px 0 36px;
-        ">
-            <span style="font-size: 12px; color: #a0a0a5; letter-spacing: -0.01em;">Contact&nbsp;&nbsp;·&nbsp;&nbsp;</span>
-            <a href="mailto:heartbring@naver.com" style="font-size: 12px; color: #8a7fc0; text-decoration: none; letter-spacing: -0.01em;">heartbring@naver.com</a>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
     # 댓글창 렌더링
     components.html(disqus_html, height=600, scrolling=True)
 
