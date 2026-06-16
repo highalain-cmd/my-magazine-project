@@ -87,13 +87,13 @@ if html_file_path and os.path.exists(html_file_path):
     st.markdown("---")
     st.subheader("💬 댓글을 남겨주세요")
     
-    disqus_html = f"""
+   disqus_html = f"""
     <div id="disqus_thread"></div>
     <script>
         var disqus_config = function () {{
-            // 아티클 제목으로 url·identifier를 함께 분리 (해시로 구분)
-            this.page.url = window.parent.location.href.split('#')[0] + "#article=" + encodeURIComponent("{selected_article_title}");
-            this.page.identifier = "{selected_article_title}"; // 아티클 제목별로 댓글창 분리
+            // 브라우저 주소에 의존하지 않고 고정 베이스 + 글 제목으로 분리
+            this.page.url = "https://buzz-buzz.streamlit.app/article/" + encodeURIComponent("{selected_article_title}");
+            this.page.identifier = "{selected_article_title}";
         }};
         (function() {{ 
             var d = document, s = d.createElement('script');
