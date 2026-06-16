@@ -102,6 +102,15 @@ if html_file_path and os.path.exists(html_file_path):
         }})();
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <style>
+        iframe[id*="ads"], iframe[src*="disqusads"], iframe[src*="ads-iframe"],
+        [data-role="ad"], .ad-wrapper, [class*="ad-container"],
+        [id*="sponsored"], [class*="sponsored"] {{
+            display: none !important;
+            height: 0 !important;
+            visibility: hidden !important;
+        }}
+    </style>
     """
     # 댓글창 렌더링
     components.html(disqus_html, height=600, scrolling=True)
