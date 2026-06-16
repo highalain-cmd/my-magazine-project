@@ -91,7 +91,8 @@ if html_file_path and os.path.exists(html_file_path):
     <div id="disqus_thread"></div>
     <script>
         var disqus_config = function () {{
-            this.page.url = window.parent.location.href;  // 스트림릿 실제 주소 자동 인식
+            // 아티클 제목으로 url·identifier를 함께 분리 (해시로 구분)
+            this.page.url = window.parent.location.href.split('#')[0] + "#article=" + encodeURIComponent("{selected_article_title}");
             this.page.identifier = "{selected_article_title}"; // 아티클 제목별로 댓글창 분리
         }};
         (function() {{ 
