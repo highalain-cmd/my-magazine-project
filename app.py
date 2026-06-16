@@ -106,7 +106,7 @@ if html_file_path and os.path.exists(html_file_path):
     # 댓글창 렌더링
     components.html(disqus_html, height=600, scrolling=True)
 
-    # ↓↓↓ 바로 여기에 contact 블록 추가 (들여쓰기 4칸) ↓↓↓
+    # --- 📮 푸터 Contact (댓글창 아래) ---
     st.markdown(
         """
         <div style="
@@ -119,7 +119,7 @@ if html_file_path and os.path.exists(html_file_path):
         </div>
         """,
         unsafe_allow_html=True
-
+    )
 
 else:
     st.info("👋 왼쪽의 '다른 주제 보기'를 열어 아티클을 선택하거나, articles 폴더에 HTML 파일을 넣어주세요!")
